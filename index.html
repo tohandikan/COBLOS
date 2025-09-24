@@ -3,288 +3,843 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Motor Shop - Pemesanan Online</title>
+    <title>HelmetPro - Toko Helm Terpercaya</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .motor-card {
+        .hero-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .motor-card:hover {
+        .card-hover:hover {
             transform: translateY(-5px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
-        .success-animation {
-            animation: successPulse 0.6s ease-in-out;
+        .pulse-animation {
+            animation: pulse 2s infinite;
         }
-        @keyframes successPulse {
-            0% { transform: scale(0.8); opacity: 0; }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); opacity: 1; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .product-card {
+            transition: all 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .category-btn {
+            transition: all 0.3s ease;
+        }
+        .category-btn:hover {
+            transform: translateY(-2px);
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+<body class="bg-gray-50">
     <!-- Header -->
-    <header class="bg-white shadow-lg">
-        <div class="container mx-auto px-6 py-4">
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                    <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
                         <span class="text-white font-bold text-xl">🏍️</span>
                     </div>
-                    <h1 class="text-2xl font-bold text-gray-800">Motor Shop</h1>
+                    <h1 class="text-2xl font-bold text-gray-800">HelmetPro</h1>
                 </div>
-                <div class="text-sm text-gray-600">
-                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full">Demo Sekolah</span>
-                </div>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#home" class="text-gray-600 hover:text-blue-600 transition-colors">Beranda</a>
+                    <a href="#about" class="text-gray-600 hover:text-blue-600 transition-colors">Tentang</a>
+                    <a href="#products" class="text-gray-600 hover:text-blue-600 transition-colors">Produk</a>
+                    <a href="#order" class="text-gray-600 hover:text-blue-600 transition-colors">Pesan</a>
+                </nav>
             </div>
         </div>
     </header>
 
-    <div class="container mx-auto px-6 py-8">
-        <!-- Motor Selection -->
-        <div class="mb-12">
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Pilih Motor Impian Anda</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Honda Vario -->
-                <div class="motor-card bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer" onclick="selectMotor('Honda Vario 160', 28000000, 'vario')">
-                    <div class="h-48 bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center">
-                        <div class="text-6xl">🏍️</div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Honda Vario 160</h3>
-                        <p class="text-gray-600 mb-4">Motor matic terpopuler dengan teknologi terdepan</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-2xl font-bold text-blue-600">Rp 28.000.000</span>
-                            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Pilih</span>
-                        </div>
-                    </div>
-                </div>
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-5xl font-bold mb-6">Keselamatan Adalah Prioritas</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">Temukan helm berkualitas tinggi dengan desain terdepan untuk perjalanan yang aman dan nyaman</p>
+            <a href="#order" class="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors inline-block">
+                Pesan Sekarang
+            </a>
+        </div>
+    </section>
 
-                <!-- Yamaha NMAX -->
-                <div class="motor-card bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer" onclick="selectMotor('Yamaha NMAX 155', 32000000, 'nmax')">
-                    <div class="h-48 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
-                        <div class="text-6xl">🏍️</div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Yamaha NMAX 155</h3>
-                        <p class="text-gray-600 mb-4">Premium scooter dengan performa maksimal</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-2xl font-bold text-blue-600">Rp 32.000.000</span>
-                            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Pilih</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Kawasaki Ninja -->
-                <div class="motor-card bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer" onclick="selectMotor('Kawasaki Ninja 250', 65000000, 'ninja')">
-                    <div class="h-48 bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
-                        <div class="text-6xl">🏍️</div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Kawasaki Ninja 250</h3>
-                        <p class="text-gray-600 mb-4">Sport bike untuk pengalaman berkendara terbaik</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-2xl font-bold text-blue-600">Rp 65.000.000</span>
-                            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Pilih</span>
-                        </div>
-                    </div>
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h3 class="text-4xl font-bold text-gray-800 mb-6">Tentang HelmetPro</h3>
+                <div class="max-w-4xl mx-auto">
+                    <p class="text-lg text-gray-600 mb-6">Sejak didirikan pada tahun 2015, HelmetPro telah menjadi pionir dalam industri helm keselamatan di Indonesia. Berawal dari sebuah toko kecil di Jakarta, kini kami telah berkembang menjadi distributor helm terpercaya dengan lebih dari 50 cabang di seluruh Nusantara.</p>
+                    
+                    <p class="text-gray-600 mb-6">Visi kami adalah menciptakan budaya berkendara yang aman di Indonesia dengan menyediakan helm berkualitas tinggi yang tidak hanya melindungi, tetapi juga memberikan kenyamanan dan gaya bagi setiap pengendara. Kami percaya bahwa keselamatan tidak boleh dikompromikan, dan setiap perjalanan harus dimulai dengan perlindungan yang tepat.</p>
+                    
+                    <p class="text-gray-600 mb-8">Tim ahli kami terdiri dari para profesional berpengalaman yang memahami kebutuhan pengendara Indonesia. Setiap produk yang kami jual telah melalui proses seleksi ketat dan pengujian kualitas untuk memastikan standar keselamatan tertinggi.</p>
                 </div>
             </div>
-        </div>
-
-        <!-- Order Form -->
-        <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8" id="orderForm" style="display: none;">
-            <h3 class="text-2xl font-bold text-gray-800 mb-6">Form Pemesanan</h3>
             
-            <form id="motorOrderForm">
-                <!-- Selected Motor Display -->
-                <div class="mb-6 p-4 bg-blue-50 rounded-lg">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h4 class="font-bold text-lg" id="selectedMotorName">Motor Terpilih</h4>
-                            <p class="text-blue-600 font-bold text-xl" id="selectedMotorPrice">Rp 0</p>
+            <!-- Stats Section -->
+            <div class="grid md:grid-cols-4 gap-8 mb-16">
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-blue-600 mb-2">9+</div>
+                    <p class="text-gray-600">Tahun Pengalaman</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-green-600 mb-2">50+</div>
+                    <p class="text-gray-600">Cabang di Indonesia</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-purple-600 mb-2">100K+</div>
+                    <p class="text-gray-600">Pelanggan Puas</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-red-600 mb-2">200+</div>
+                    <p class="text-gray-600">Varian Produk</p>
+                </div>
+            </div>
+            
+            <!-- Features Grid -->
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="text-center p-8 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200">
+                    <div class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-3xl text-white">🛡️</span>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-4 text-gray-800">Standar SNI & DOT</h4>
+                    <p class="text-gray-600">Semua produk kami telah tersertifikasi SNI Indonesia dan DOT Amerika, memastikan perlindungan maksimal sesuai standar internasional. Setiap helm telah lulus uji benturan, penetrasi, dan ketahanan tali dagu.</p>
+                </div>
+                
+                <div class="text-center p-8 rounded-xl bg-gradient-to-br from-green-50 to-green-100 border border-green-200">
+                    <div class="w-20 h-20 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-3xl text-white">⭐</span>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-4 text-gray-800">Material Premium</h4>
+                    <p class="text-gray-600">Menggunakan material ABS berkualitas tinggi, EPS foam multi-density, dan sistem ventilasi canggih. Interior helm dibuat dari bahan hypoallergenic yang dapat dicuci dan anti-bakteri untuk kenyamanan maksimal.</p>
+                </div>
+                
+                <div class="text-center p-8 rounded-xl bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-200">
+                    <div class="w-20 h-20 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-3xl text-white">🚚</span>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-4 text-gray-800">Layanan Terpercaya</h4>
+                    <p class="text-gray-600">Pengiriman gratis ke seluruh Indonesia dengan asuransi penuh. Garansi resmi 2 tahun, layanan after-sales 24/7, dan program tukar tambah helm lama. Kepuasan pelanggan adalah prioritas utama kami.</p>
+                </div>
+            </div>
+            
+            <!-- Company Values -->
+            <div class="bg-gray-50 rounded-2xl p-8">
+                <h4 class="text-2xl font-bold text-center text-gray-800 mb-8">Nilai-Nilai Perusahaan</h4>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">🎯</span>
                         </div>
-                        <button type="button" onclick="changeMotor()" class="text-blue-600 hover:text-blue-800 text-sm underline">Ganti Motor</button>
+                        <h5 class="font-semibold mb-2">Keselamatan Utama</h5>
+                        <p class="text-sm text-gray-600">Mengutamakan keselamatan pengendara di atas segalanya</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">💎</span>
+                        </div>
+                        <h5 class="font-semibold mb-2">Kualitas Terjamin</h5>
+                        <p class="text-sm text-gray-600">Hanya menjual produk dengan kualitas terbaik</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">🤝</span>
+                        </div>
+                        <h5 class="font-semibold mb-2">Pelayanan Prima</h5>
+                        <p class="text-sm text-gray-600">Memberikan pelayanan terbaik kepada setiap pelanggan</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">🚀</span>
+                        </div>
+                        <h5 class="font-semibold mb-2">Inovasi Berkelanjutan</h5>
+                        <p class="text-sm text-gray-600">Terus berinovasi untuk produk yang lebih baik</p>
                     </div>
                 </div>
-
-                <!-- Customer Information -->
-                <div class="grid md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                        <label class="block text-gray-700 font-medium mb-2">Nama Lengkap *</label>
-                        <input type="text" name="nama" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 font-medium mb-2">No. Telepon *</label>
-                        <input type="tel" name="telepon" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    </div>
-                </div>
-
-                <div class="mb-6">
-                    <label class="block text-gray-700 font-medium mb-2">Email</label>
-                    <input type="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                </div>
-
-                <div class="mb-6">
-                    <label class="block text-gray-700 font-medium mb-2">Alamat Lengkap *</label>
-                    <textarea name="alamat" required rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
-                </div>
-
-                <!-- Payment Method -->
-                <div class="mb-6">
-                    <label class="block text-gray-700 font-medium mb-2">Metode Pembayaran *</label>
-                    <div class="grid grid-cols-2 gap-4">
-                        <label class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
-                            <input type="radio" name="pembayaran" value="cash" required class="mr-3">
-                            <span>💰 Cash</span>
-                        </label>
-                        <label class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
-                            <input type="radio" name="pembayaran" value="kredit" required class="mr-3">
-                            <span>💳 Kredit</span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Additional Notes -->
-                <div class="mb-6">
-                    <label class="block text-gray-700 font-medium mb-2">Catatan Tambahan</label>
-                    <textarea name="catatan" rows="3" placeholder="Warna yang diinginkan, permintaan khusus, dll." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
-                </div>
-
-                <!-- Submit Button -->
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg transition duration-300 transform hover:scale-105">
-                    <span id="submitText">🚀 Pesan Sekarang</span>
-                    <span id="loadingText" style="display: none;">⏳ Mengirim Pesanan...</span>
-                </button>
-            </form>
-        </div>
-
-        <!-- Success Message -->
-        <div id="successMessage" class="max-w-2xl mx-auto bg-green-50 border border-green-200 rounded-xl p-8 text-center" style="display: none;">
-            <div class="success-animation">
-                <div class="text-6xl mb-4">✅</div>
-                <h3 class="text-2xl font-bold text-green-800 mb-4">Pesanan Berhasil Dikirim!</h3>
-                <p class="text-green-700 mb-6">Terima kasih! Pesanan Anda telah kami terima dan akan segera diproses. Tim kami akan menghubungi Anda dalam 1x24 jam.</p>
-                <button onclick="resetForm()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg">
-                    Pesan Lagi
-                </button>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold mb-4">Apa Kata Pelanggan Kami</h3>
+                <p class="text-blue-100">Kepercayaan pelanggan adalah aset terbesar kami</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-xl">👨</span>
+                        </div>
+                        <div>
+                            <h5 class="font-semibold">Budi Santoso</h5>
+                            <p class="text-sm text-blue-100">Pengendara Harian</p>
+                        </div>
+                    </div>
+                    <p class="text-blue-100">"Sudah 3 tahun pakai helm dari HelmetPro, kualitasnya benar-benar terjamin. Nyaman dipakai seharian dan ventilasi udaranya bagus banget!"</p>
+                    <div class="flex mt-4">
+                        <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
+                    </div>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-pink-400 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-xl">👩</span>
+                        </div>
+                        <div>
+                            <h5 class="font-semibold">Sari Dewi</h5>
+                            <p class="text-sm text-blue-100">Ibu Rumah Tangga</p>
+                        </div>
+                    </div>
+                    <p class="text-blue-100">"Pelayanannya sangat memuaskan! Helm yang saya pesan sampai dengan cepat dan sesuai ekspektasi. Recommended banget!"</p>
+                    <div class="flex mt-4">
+                        <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
+                    </div>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-green-400 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-xl">👨‍💼</span>
+                        </div>
+                        <div>
+                            <h5 class="font-semibold">Ahmad Rizki</h5>
+                            <p class="text-sm text-blue-100">Touring Enthusiast</p>
+                        </div>
+                    </div>
+                    <p class="text-blue-100">"Helm modular yang saya beli perfect untuk touring jarak jauh. Fitur flip-up nya sangat membantu dan kualitas build-nya solid!"</p>
+                    <div class="flex mt-4">
+                        <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h3 class="text-4xl font-bold text-gray-800 mb-6">Koleksi Helm Terlengkap</h3>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">Temukan helm yang sempurna untuk setiap kebutuhan berkendara Anda. Dari helm harian hingga helm racing profesional, semua tersedia dengan kualitas terjamin dan harga terbaik.</p>
+            </div>
+            
+            <!-- Product Categories -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button class="category-btn active px-6 py-3 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors" data-category="all">
+                    Semua Produk
+                </button>
+                <button class="category-btn px-6 py-3 rounded-full bg-white text-gray-700 font-semibold hover:bg-gray-100 transition-colors border" data-category="fullface">
+                    Full Face
+                </button>
+                <button class="category-btn px-6 py-3 rounded-full bg-white text-gray-700 font-semibold hover:bg-gray-100 transition-colors border" data-category="halfface">
+                    Half Face
+                </button>
+                <button class="category-btn px-6 py-3 rounded-full bg-white text-gray-700 font-semibold hover:bg-gray-100 transition-colors border" data-category="modular">
+                    Modular
+                </button>
+                <button class="category-btn px-6 py-3 rounded-full bg-white text-gray-700 font-semibold hover:bg-gray-100 transition-colors border" data-category="sport">
+                    Sport Racing
+                </button>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" id="productGrid">
+                <!-- Helm Full Face Premium -->
+                <div class="product-card bg-white rounded-xl shadow-lg overflow-hidden card-hover" data-category="fullface">
+                    <div class="h-48 bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center relative">
+                        <span class="text-6xl">🏍️</span>
+                        <div class="absolute top-4 right-4 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            Premium
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-semibold mb-2">Helm Full Face Premium</h4>
+                        <p class="text-gray-600 mb-3 text-sm">Perlindungan maksimal dengan teknologi anti-fog dan sistem ventilasi canggih</p>
+                        <div class="flex items-center mb-3">
+                            <span class="text-yellow-400 mr-2">⭐⭐⭐⭐⭐</span>
+                            <span class="text-sm text-gray-500">(4.9/5)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-2xl font-bold text-blue-600">Rp 750.000</span>
+                                <div class="text-sm text-gray-500">Stok: 18</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Helm Full Face Standard -->
+                <div class="product-card bg-white rounded-xl shadow-lg overflow-hidden card-hover" data-category="fullface">
+                    <div class="h-48 bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center">
+                        <span class="text-6xl">🏍️</span>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-semibold mb-2">Helm Full Face Standard</h4>
+                        <p class="text-gray-600 mb-3 text-sm">Helm full face berkualitas dengan harga terjangkau untuk penggunaan sehari-hari</p>
+                        <div class="flex items-center mb-3">
+                            <span class="text-yellow-400 mr-2">⭐⭐⭐⭐⭐</span>
+                            <span class="text-sm text-gray-500">(4.7/5)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-2xl font-bold text-blue-600">Rp 450.000</span>
+                                <div class="text-sm text-gray-500">Stok: 32</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Helm Half Face Retro -->
+                <div class="product-card bg-white rounded-xl shadow-lg overflow-hidden card-hover" data-category="halfface">
+                    <div class="h-48 bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center">
+                        <span class="text-6xl">🛵</span>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-semibold mb-2">Helm Half Face Retro</h4>
+                        <p class="text-gray-600 mb-3 text-sm">Desain klasik dengan sentuhan modern, cocok untuk gaya vintage</p>
+                        <div class="flex items-center mb-3">
+                            <span class="text-yellow-400 mr-2">⭐⭐⭐⭐⭐</span>
+                            <span class="text-sm text-gray-500">(4.6/5)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-2xl font-bold text-blue-600">Rp 320.000</span>
+                                <div class="text-sm text-gray-500">Stok: 28</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Helm Half Face Urban -->
+                <div class="product-card bg-white rounded-xl shadow-lg overflow-hidden card-hover" data-category="halfface">
+                    <div class="h-48 bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center">
+                        <span class="text-6xl">🛵</span>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-semibold mb-2">Helm Half Face Urban</h4>
+                        <p class="text-gray-600 mb-3 text-sm">Ringan dan stylish untuk pengendara kota modern</p>
+                        <div class="flex items-center mb-3">
+                            <span class="text-yellow-400 mr-2">⭐⭐⭐⭐⭐</span>
+                            <span class="text-sm text-gray-500">(4.5/5)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-2xl font-bold text-blue-600">Rp 280.000</span>
+                                <div class="text-sm text-gray-500">Stok: 45</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Helm Modular Premium -->
+                <div class="product-card bg-white rounded-xl shadow-lg overflow-hidden card-hover" data-category="modular">
+                    <div class="h-48 bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center relative">
+                        <span class="text-6xl">🏁</span>
+                        <div class="absolute top-4 right-4 bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            Premium
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-semibold mb-2">Helm Modular Premium</h4>
+                        <p class="text-gray-600 mb-3 text-sm">Teknologi flip-up terdepan dengan sistem komunikasi Bluetooth ready</p>
+                        <div class="flex items-center mb-3">
+                            <span class="text-yellow-400 mr-2">⭐⭐⭐⭐⭐</span>
+                            <span class="text-sm text-gray-500">(4.8/5)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-2xl font-bold text-blue-600">Rp 950.000</span>
+                                <div class="text-sm text-gray-500">Stok: 12</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Helm Modular Standard -->
+                <div class="product-card bg-white rounded-xl shadow-lg overflow-hidden card-hover" data-category="modular">
+                    <div class="h-48 bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center">
+                        <span class="text-6xl">🏁</span>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-semibold mb-2">Helm Modular Standard</h4>
+                        <p class="text-gray-600 mb-3 text-sm">Fleksibilitas tinggi dengan visor yang dapat dibuka untuk kenyamanan maksimal</p>
+                        <div class="flex items-center mb-3">
+                            <span class="text-yellow-400 mr-2">⭐⭐⭐⭐⭐</span>
+                            <span class="text-sm text-gray-500">(4.6/5)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-2xl font-bold text-blue-600">Rp 650.000</span>
+                                <div class="text-sm text-gray-500">Stok: 22</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Helm Sport Racing Pro -->
+                <div class="product-card bg-white rounded-xl shadow-lg overflow-hidden card-hover" data-category="sport">
+                    <div class="h-48 bg-gradient-to-br from-red-600 to-black flex items-center justify-center relative">
+                        <span class="text-6xl">🏎️</span>
+                        <div class="absolute top-4 right-4 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            Pro Racing
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-semibold mb-2">Helm Sport Racing Pro</h4>
+                        <p class="text-gray-600 mb-3 text-sm">Helm racing profesional dengan aerodinamika terbaik dan material carbon fiber</p>
+                        <div class="flex items-center mb-3">
+                            <span class="text-yellow-400 mr-2">⭐⭐⭐⭐⭐</span>
+                            <span class="text-sm text-gray-500">(5.0/5)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-2xl font-bold text-blue-600">Rp 1.250.000</span>
+                                <div class="text-sm text-gray-500">Stok: 8</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Helm Sport Racing Standard -->
+                <div class="product-card bg-white rounded-xl shadow-lg overflow-hidden card-hover" data-category="sport">
+                    <div class="h-48 bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center">
+                        <span class="text-6xl">🏎️</span>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-semibold mb-2">Helm Sport Racing</h4>
+                        <p class="text-gray-600 mb-3 text-sm">Desain sporty dengan performa tinggi untuk pengendara yang menyukai kecepatan</p>
+                        <div class="flex items-center mb-3">
+                            <span class="text-yellow-400 mr-2">⭐⭐⭐⭐⭐</span>
+                            <span class="text-sm text-gray-500">(4.7/5)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-2xl font-bold text-blue-600">Rp 850.000</span>
+                                <div class="text-sm text-gray-500">Stok: 15</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Helm Adventure -->
+                <div class="product-card bg-white rounded-xl shadow-lg overflow-hidden card-hover" data-category="fullface">
+                    <div class="h-48 bg-gradient-to-br from-green-600 to-teal-700 flex items-center justify-center">
+                        <span class="text-6xl">🏔️</span>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-semibold mb-2">Helm Adventure</h4>
+                        <p class="text-gray-600 mb-3 text-sm">Dirancang khusus untuk petualangan off-road dengan perlindungan ekstra</p>
+                        <div class="flex items-center mb-3">
+                            <span class="text-yellow-400 mr-2">⭐⭐⭐⭐⭐</span>
+                            <span class="text-sm text-gray-500">(4.8/5)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-2xl font-bold text-blue-600">Rp 720.000</span>
+                                <div class="text-sm text-gray-500">Stok: 14</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Helm Touring -->
+                <div class="product-card bg-white rounded-xl shadow-lg overflow-hidden card-hover" data-category="fullface">
+                    <div class="h-48 bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+                        <span class="text-6xl">🛣️</span>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-semibold mb-2">Helm Touring</h4>
+                        <p class="text-gray-600 mb-3 text-sm">Kenyamanan maksimal untuk perjalanan jarak jauh dengan ventilasi optimal</p>
+                        <div class="flex items-center mb-3">
+                            <span class="text-yellow-400 mr-2">⭐⭐⭐⭐⭐</span>
+                            <span class="text-sm text-gray-500">(4.7/5)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-2xl font-bold text-blue-600">Rp 580.000</span>
+                                <div class="text-sm text-gray-500">Stok: 26</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Helm Cruiser -->
+                <div class="product-card bg-white rounded-xl shadow-lg overflow-hidden card-hover" data-category="halfface">
+                    <div class="h-48 bg-gradient-to-br from-amber-500 to-orange-700 flex items-center justify-center">
+                        <span class="text-6xl">🏍️</span>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-semibold mb-2">Helm Cruiser</h4>
+                        <p class="text-gray-600 mb-3 text-sm">Gaya klasik Amerika dengan kenyamanan modern untuk pengendara cruiser</p>
+                        <div class="flex items-center mb-3">
+                            <span class="text-yellow-400 mr-2">⭐⭐⭐⭐⭐</span>
+                            <span class="text-sm text-gray-500">(4.5/5)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-2xl font-bold text-blue-600">Rp 380.000</span>
+                                <div class="text-sm text-gray-500">Stok: 20</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Helm Cafe Racer -->
+                <div class="product-card bg-white rounded-xl shadow-lg overflow-hidden card-hover" data-category="halfface">
+                    <div class="h-48 bg-gradient-to-br from-slate-600 to-gray-800 flex items-center justify-center">
+                        <span class="text-6xl">☕</span>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-semibold mb-2">Helm Cafe Racer</h4>
+                        <p class="text-gray-600 mb-3 text-sm">Desain minimalis dengan sentuhan vintage untuk gaya cafe racer</p>
+                        <div class="flex items-center mb-3">
+                            <span class="text-yellow-400 mr-2">⭐⭐⭐⭐⭐</span>
+                            <span class="text-sm text-gray-500">(4.6/5)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-2xl font-bold text-blue-600">Rp 420.000</span>
+                                <div class="text-sm text-gray-500">Stok: 18</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product Features -->
+            <div class="mt-16 bg-white rounded-2xl p-8 shadow-lg">
+                <h4 class="text-2xl font-bold text-center text-gray-800 mb-8">Fitur Unggulan Semua Produk</h4>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">🛡️</span>
+                        </div>
+                        <h5 class="font-semibold mb-2">Sertifikasi SNI</h5>
+                        <p class="text-sm text-gray-600">Standar Nasional Indonesia</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">💨</span>
+                        </div>
+                        <h5 class="font-semibold mb-2">Ventilasi Optimal</h5>
+                        <p class="text-sm text-gray-600">Sistem sirkulasi udara</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">🧽</span>
+                        </div>
+                        <h5 class="font-semibold mb-2">Interior Removable</h5>
+                        <p class="text-sm text-gray-600">Dapat dicuci dan diganti</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">⚡</span>
+                        </div>
+                        <h5 class="font-semibold mb-2">Quick Release</h5>
+                        <p class="text-sm text-gray-600">Sistem buckle cepat</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Form Section -->
+    <section id="order" class="py-16 bg-white">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold text-gray-800 mb-4">Form Pemesanan</h3>
+                <p class="text-gray-600">Isi form di bawah ini untuk memesan helm pilihan Anda</p>
+            </div>
+            
+            <form id="orderForm" class="bg-gray-50 p-8 rounded-lg shadow-lg">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Data Pembeli -->
+                    <div class="space-y-4">
+                        <h4 class="text-lg font-semibold text-gray-800 border-b pb-2">Data Pembeli</h4>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap *</label>
+                            <input type="text" id="nama" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">No. WhatsApp *</label>
+                            <input type="tel" id="whatsapp" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="08xxxxxxxxxx">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Alamat Lengkap *</label>
+                            <textarea id="alamat" required rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Data Pesanan -->
+                    <div class="space-y-4">
+                        <h4 class="text-lg font-semibold text-gray-800 border-b pb-2">Data Pesanan</h4>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Helm *</label>
+                            <select id="jenisHelm" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Pilih Jenis Helm</option>
+                                <optgroup label="Full Face">
+                                    <option value="Helm Full Face Premium - Rp 750.000">Helm Full Face Premium - Rp 750.000</option>
+                                    <option value="Helm Full Face Standard - Rp 450.000">Helm Full Face Standard - Rp 450.000</option>
+                                    <option value="Helm Adventure - Rp 720.000">Helm Adventure - Rp 720.000</option>
+                                    <option value="Helm Touring - Rp 580.000">Helm Touring - Rp 580.000</option>
+                                </optgroup>
+                                <optgroup label="Half Face">
+                                    <option value="Helm Half Face Retro - Rp 320.000">Helm Half Face Retro - Rp 320.000</option>
+                                    <option value="Helm Half Face Urban - Rp 280.000">Helm Half Face Urban - Rp 280.000</option>
+                                    <option value="Helm Cruiser - Rp 380.000">Helm Cruiser - Rp 380.000</option>
+                                    <option value="Helm Cafe Racer - Rp 420.000">Helm Cafe Racer - Rp 420.000</option>
+                                </optgroup>
+                                <optgroup label="Modular">
+                                    <option value="Helm Modular Premium - Rp 950.000">Helm Modular Premium - Rp 950.000</option>
+                                    <option value="Helm Modular Standard - Rp 650.000">Helm Modular Standard - Rp 650.000</option>
+                                </optgroup>
+                                <optgroup label="Sport Racing">
+                                    <option value="Helm Sport Racing Pro - Rp 1.250.000">Helm Sport Racing Pro - Rp 1.250.000</option>
+                                    <option value="Helm Sport Racing - Rp 850.000">Helm Sport Racing - Rp 850.000</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Ukuran *</label>
+                            <select id="ukuran" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Pilih Ukuran</option>
+                                <option value="S (54-55 cm)">S (54-55 cm)</option>
+                                <option value="M (56-57 cm)">M (56-57 cm)</option>
+                                <option value="L (58-59 cm)">L (58-59 cm)</option>
+                                <option value="XL (60-61 cm)">XL (60-61 cm)</option>
+                                <option value="XXL (62-63 cm)">XXL (62-63 cm)</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Warna *</label>
+                            <select id="warna" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Pilih Warna</option>
+                                <option value="Hitam">Hitam</option>
+                                <option value="Putih">Putih</option>
+                                <option value="Merah">Merah</option>
+                                <option value="Biru">Biru</option>
+                                <option value="Silver">Silver</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Jumlah *</label>
+                            <input type="number" id="jumlah" required min="1" max="10" value="1" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Catatan Tambahan</label>
+                            <textarea id="catatan" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Permintaan khusus atau catatan lainnya"></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <button type="submit" id="submitBtn" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                        <span id="btnText">Kirim Pesanan</span>
+                        <span id="btnLoading" class="hidden">Mengirim...</span>
+                    </button>
+                </div>
+            </form>
+            
+            <!-- Success Message -->
+            <div id="successMessage" class="hidden mt-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg text-center">
+                <h4 class="font-semibold">Pesanan Berhasil Dikirim! ✅</h4>
+                <p>Terima kasih atas pesanan Anda. Tim kami akan segera menghubungi Anda melalui WhatsApp.</p>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-8 mt-12">
-        <div class="container mx-auto px-6 text-center">
-            <p class="mb-2">🏍️ Motor Shop - Demo Aplikasi Sekolah</p>
-            <p class="text-gray-400 text-sm">Dibuat untuk keperluan pembelajaran dan praktek</p>
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                            <span class="text-white font-bold">🏍️</span>
+                        </div>
+                        <h4 class="text-xl font-bold">HelmetPro</h4>
+                    </div>
+                    <p class="text-gray-400">Toko helm terpercaya dengan kualitas terbaik untuk keselamatan perjalanan Anda.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Kontak</h4>
+                    <div class="space-y-2 text-gray-400">
+                        <p>📍 Jl. Raya Helmet No. 123, Jakarta</p>
+                        <p>📞 (021) 1234-5678</p>
+                        <p>📱 0812-3456-7890</p>
+                        <p>✉️ info@helmetpro.com</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Jam Operasional</h4>
+                    <div class="space-y-2 text-gray-400">
+                        <p>Senin - Jumat: 08:00 - 17:00</p>
+                        <p>Sabtu: 08:00 - 15:00</p>
+                        <p>Minggu: Tutup</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 HelmetPro. Semua hak dilindungi.</p>
+            </div>
         </div>
     </footer>
 
     <script>
-        let selectedMotor = null;
-        
-        // Google Apps Script Web App URL - Ganti dengan URL Anda
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzUj7e_c_ZLM4ZT3COP9Fst1YQRAl5vzc-oZGu-vUCTZHweHxDEaombKPhjCI3ket6RQw/exec';
-
-        function selectMotor(name, price, type) {
-            selectedMotor = { name, price, type };
-            
-            document.getElementById('selectedMotorName').textContent = name;
-            document.getElementById('selectedMotorPrice').textContent = formatRupiah(price);
-            document.getElementById('orderForm').style.display = 'block';
-            
-            // Smooth scroll to form
-            document.getElementById('orderForm').scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'start'
+        // Smooth scrolling untuk navigasi
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
             });
-        }
+        });
 
-        function changeMotor() {
-            document.getElementById('orderForm').style.display = 'none';
-            selectedMotor = null;
-            
-            // Scroll back to motor selection
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        // Product filtering functionality
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+                
+                // Update active button
+                document.querySelectorAll('.category-btn').forEach(b => {
+                    b.classList.remove('active', 'bg-blue-600', 'text-white');
+                    b.classList.add('bg-white', 'text-gray-700', 'border');
+                });
+                this.classList.add('active', 'bg-blue-600', 'text-white');
+                this.classList.remove('bg-white', 'text-gray-700', 'border');
+                
+                // Filter products
+                const products = document.querySelectorAll('.product-card');
+                products.forEach(product => {
+                    if (category === 'all' || product.getAttribute('data-category') === category) {
+                        product.style.display = 'block';
+                        product.style.animation = 'fadeIn 0.5s ease-in';
+                    } else {
+                        product.style.display = 'none';
+                    }
+                });
+            });
+        });
 
-        function formatRupiah(number) {
-            return new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-                minimumFractionDigits: 0
-            }).format(number);
-        }
-
-        function resetForm() {
-            document.getElementById('motorOrderForm').reset();
-            document.getElementById('orderForm').style.display = 'none';
-            document.getElementById('successMessage').style.display = 'none';
-            selectedMotor = null;
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Form submission
-        document.getElementById('motorOrderForm').addEventListener('submit', async function(e) {
+        // Form submission handler
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            if (!selectedMotor) {
-                alert('Silakan pilih motor terlebih dahulu!');
-                return;
-            }
-
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const btnLoading = document.getElementById('btnLoading');
+            const successMessage = document.getElementById('successMessage');
+            
             // Show loading state
-            document.getElementById('submitText').style.display = 'none';
-            document.getElementById('loadingText').style.display = 'inline';
-
+            btnText.classList.add('hidden');
+            btnLoading.classList.remove('hidden');
+            submitBtn.disabled = true;
+            
             // Collect form data
-            const formData = new FormData(this);
-            const orderData = {
+            const formData = {
                 timestamp: new Date().toLocaleString('id-ID'),
-                motor: selectedMotor.name,
-                harga: selectedMotor.price,
-                nama: formData.get('nama'),
-                telepon: formData.get('telepon'),
-                email: formData.get('email') || '-',
-                alamat: formData.get('alamat'),
-                pembayaran: formData.get('pembayaran'),
-                catatan: formData.get('catatan') || '-'
+                nama: document.getElementById('nama').value,
+                whatsapp: document.getElementById('whatsapp').value,
+                email: document.getElementById('email').value,
+                alamat: document.getElementById('alamat').value,
+                jenisHelm: document.getElementById('jenisHelm').value,
+                ukuran: document.getElementById('ukuran').value,
+                warna: document.getElementById('warna').value,
+                jumlah: document.getElementById('jumlah').value,
+                catatan: document.getElementById('catatan').value
             };
-
-            try {
-                // Send to Google Sheets (uncomment when you have the script URL)
-                const response = await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(orderData)
-                });
-
-                // Simulate API call for demo
-                await new Promise(resolve => setTimeout(resolve, 2000));
-
+            
+            // Send to Google Sheets (replace with your actual Google Apps Script URL)
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxaZC1F8Yxk7ke6uNdART-JTo8u9X2sQwsmoKl-T8TZd7YHyVRLxpyMvVg7dSzqvsXn/exec';
+            
+            fetch(scriptURL, {
+                method: 'POST',
+                body: JSON.stringify(formData),
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Reset button state
+                btnText.classList.remove('hidden');
+                btnLoading.classList.add('hidden');
+                submitBtn.disabled = false;
+                
                 // Show success message
-                document.getElementById('orderForm').style.display = 'none';
-                document.getElementById('successMessage').style.display = 'block';
-                document.getElementById('successMessage').scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'center'
-                });
-
-                console.log('Data pesanan:', orderData);
-
-            } catch (error) {
+                successMessage.classList.remove('hidden');
+                
+                // Reset form
+                document.getElementById('orderForm').reset();
+                
+                // Scroll to success message
+                successMessage.scrollIntoView({ behavior: 'smooth' });
+            })
+            .catch(error => {
                 console.error('Error:', error);
+                
+                // Reset button state
+                btnText.classList.remove('hidden');
+                btnLoading.classList.add('hidden');
+                submitBtn.disabled = false;
+                
+                // Show error (you can customize this)
                 alert('Terjadi kesalahan saat mengirim pesanan. Silakan coba lagi.');
-            } finally {
-                // Reset loading state
-                document.getElementById('submitText').style.display = 'inline';
-                document.getElementById('loadingText').style.display = 'none';
-            }
+            });
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9831e9db16c455de',t:'MTc1ODU0NTI3NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9841879bb39caecd',t:'MTc1ODcwOTAyMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
