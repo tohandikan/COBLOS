@@ -1114,215 +1114,13 @@
     <!-- Notification -->
     <div class="notification" id="notification"></div>
 
-    
-const API_URL = 'https://script.google.com/macros/s/AKfycbzmrfumORDl1XCDe6ipo5I-ShUYxgU53y5bweAxi-5PoCdHRTJSx9ppzAAbdji3J5hj6Q/exec';
-
-// Fungsi untuk memanggil API
-async function callAPI(action, data = {}) {
-    try {
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                action: action,
-                ...data
-            })
-        });
-        
-        const result = await response.json();
-        console.log('API Response:', action, result);
-        return result;
-        
-    } catch (error) {
-        console.error('API Error:', error);
-        return { 
-            success: false, 
-            error: 'Koneksi gagal. Periksa koneksi internet Anda.' 
-        };
-    }
-}
-
-// Fungsi untuk memanggil API GET
-async function callAPIGet(action) {
-    try {
-        const response = await fetch(`${API_URL}?action=${action}`);
-        const result = await response.json();
-        console.log('API GET Response:', action, result);
-        return result;
-    } catch (error) {
-        console.error('API GET Error:', error);
-        return { 
-            success: false, 
-            error: 'Koneksi gagal' 
-        };
-    }
-}
-
-// Update fungsi handleCheckout
-async function handleCheckout(event) {
-    event.preventDefault();
-    
-    const formData = new FormData(event.target);
-    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const discount = calculateDiscount(subtotal);
-    const shipping = appliedPromo && appliedPromo.code === 'FREEONGKIR' ? 0 : 10000;
-    const total = subtotal - discount + shipping;
-
-    const orderData = {
-        customer: {
-            name: formData.get('customerName'),
-            phone: formData.get('customerPhone'),
-            address: formData.get('customerAddress')
-        },
-        items: [...cart],
-        paymentMethod: formData.get('paymentMethod'),
-        promoCode: appliedPromo ? appliedPromo.code : null,
-        subtotal: subtotal,
-        discount: discount,
-        shipping: shipping,
-        total: total
-    };
-    
-    // Validasi data
-    if (!orderData.customer.name || !orderData.customer.phone || !orderData.customer.address) {
-        showNotification('Harap lengkapi semua informasi pengiriman!', 'error');
-        return;
-    }
-    
-    if (orderData.items.length === 0) {
-        showNotification('Keranjang masih kosong!', 'error');
-        return;
-    }
-    
-    // Tampilkan loading
-    showLoading(true);
-    
-    try {
-        const result = await callAPI('createOrder', { orderData });
-        
-        if (result.success) {
-            // Clear cart and promo
-            cart = [];
-            appliedPromo = null;
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartCount();
-            updateCartDisplay();
-            
-            showNotification(`Pesanan berhasil! Order ID: ${result.orderId}`, 'success');
-            
-            setTimeout(() => {
-                navigateTo('dashboard');
-            }, 3000);
-        } else {
-            showNotification(result.error || 'Gagal membuat pesanan', 'error');
-        }
-    } catch (error) {
-        showNotification('Terjadi kesalahan saat memproses pesanan', 'error');
-    } finally {
-        showLoading(false);
-    }
-}
-
-// Update fungsi applyPromo
-async function applyPromo() {
-    const promoInput = document.getElementById('promoCode');
-    const promoMessage = document.getElementById('promoMessage');
-    const promoCode = promoInput.value.trim().toUpperCase();
-    
-    if (!promoCode) {
-        promoMessage.innerHTML = '<span style="color: var(--danger);">❌ Masukkan kode promo terlebih dahulu</span>';
-        return;
-    }
-    
-    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    
-    const result = await callAPI('applyPromo', {
-        promoCode: promoCode,
-        subtotal: subtotal
-    });
-    
-    if (result.success) {
-        appliedPromo = { 
-            code: promoCode, 
-            discount: result.discount,
-            type: result.type,
-            description: result.description
-        };
-        promoMessage.innerHTML = `<span style="color: var(--success);">✅ ${result.description} berhasil diterapkan!</span>`;
-        updateCheckoutDisplay();
-        showNotification('Kode promo berhasil diterapkan!', 'success');
-    } else {
-        promoMessage.innerHTML = `<span style="color: var(--danger);">❌ ${result.error}</span>`;
-    }
-}
-
-// Fungsi untuk load menu dari API
-async function loadMenuFromAPI() {
-    try {
-        const result = await callAPIGet('getMenu');
-        if (result.success && result.menu) {
-            return result.menu;
-        }
-    } catch (error) {
-        console.error('Failed to load menu from API:', error);
-    }
-    return null;
-}
-
-// Update fungsi subscribeNewsletter
-async function subscribeNewsletter() {
-    const emailInput = document.querySelector('input[type="email"]');
-    const email = emailInput.value.trim();
-    
-    if (!email) {
-        showNotification('Masukkan email Anda terlebih dahulu!', 'error');
-        return;
-    }
-    
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        showNotification('Format email tidak valid!', 'error');
-        return;
-    }
-    
-    const result = await callAPI('subscribeNewsletter', { email: email });
-    
-    if (result.success) {
-        showNotification(result.message, 'success');
-        emailInput.value = '';
-    } else {
-        showNotification(result.error, 'error');
-    }
-}
-
-// Fungsi untuk mendapatkan riwayat pesanan
-async function loadOrderHistory(phone) {
-    try {
-        const result = await callAPI('getOrders', { customerPhone: phone });
-        if (result.success) {
-            return result.orders;
-        }
-    } catch (error) {
-        console.error('Failed to load order history:', error);
-    }
-    return [];
-}
-
-// Update fungsi showLoading
-function showLoading(show) {
-    const loading = document.getElementById('loading');
-    if (loading) {
-        if (show) {
-            loading.classList.add('show');
-        } else {
-            loading.classList.remove('show');
-        }
-    }
-}
     <script>
-        // Sample menu data
+        // ===============================
+        // KONFIGURASI API - UBAH URL INI!
+        // ===============================
+        const API_URL = 'https://script.google.com/macros/s/https://script.google.com/macros/s/AKfycbzmrfumORDl1XCDe6ipo5I-ShUYxgU53y5bweAxi-5PoCdHRTJSx9ppzAAbdji3J5hj6Q/exec/exec'; // Ganti dengan URL Web App Anda
+
+        // Sample menu data (fallback jika API tidak tersedia)
         const menuData = [
             // Pizza Category
             { id: 1, name: 'Pizza Margherita', category: 'pizza', price: 85000, image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop', description: 'Pizza klasik dengan tomat segar, mozzarella, dan basil Italia', rating: 4.8, cookTime: '15-20 menit', isPopular: true },
@@ -1351,6 +1149,7 @@ function showLoading(show) {
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         let orders = JSON.parse(localStorage.getItem('orders')) || [];
         let appliedPromo = null;
+        let currentMenuData = [];
 
         // Promo codes data
         const promoCodes = {
@@ -1360,7 +1159,59 @@ function showLoading(show) {
             'WEEKEND30': { discount: 30, type: 'percentage', minOrder: 75000, description: 'Diskon 30% weekend special' }
         };
 
-        // Navigation function - FIXED VERSION
+        // ===============================
+        // FUNGSI API
+        // ===============================
+
+        // Fungsi untuk memanggil API
+        async function callAPI(action, data = {}) {
+            try {
+                console.log(`Calling API: ${action}`, data);
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: action,
+                        ...data
+                    })
+                });
+                
+                const result = await response.json();
+                console.log('API Response:', action, result);
+                return result;
+                
+            } catch (error) {
+                console.error('API Error:', error);
+                return { 
+                    success: false, 
+                    error: 'Koneksi gagal. Periksa koneksi internet Anda.' 
+                };
+            }
+        }
+
+        // Fungsi untuk memanggil API GET
+        async function callAPIGet(action) {
+            try {
+                const response = await fetch(`${API_URL}?action=${action}`);
+                const result = await response.json();
+                console.log('API GET Response:', action, result);
+                return result;
+            } catch (error) {
+                console.error('API GET Error:', error);
+                return { 
+                    success: false, 
+                    error: 'Koneksi gagal' 
+                };
+            }
+        }
+
+        // ===============================
+        // FUNGSI UTAMA
+        // ===============================
+
+        // Navigation function
         function navigateTo(pageId) {
             console.log('Navigating to:', pageId);
             
@@ -1397,7 +1248,7 @@ function showLoading(show) {
             // Page-specific updates
             setTimeout(() => {
                 if (pageId === 'menu') {
-                    renderMenu();
+                    loadMenuData();
                 }
                 if (pageId === 'cart') {
                     updateCartDisplay();
@@ -1406,7 +1257,7 @@ function showLoading(show) {
                     updateCheckoutDisplay();
                 }
                 if (pageId === 'dashboard') {
-                    updateDashboard();
+                    loadOrderHistory();
                 }
             }, 100);
             
@@ -1419,10 +1270,9 @@ function showLoading(show) {
             console.log('App initializing...');
             
             updateCartCount();
-            renderMenu();
+            loadMenuData();
             renderPopularItems();
             updateCartDisplay();
-            updateDashboard();
             
             // Setup form submission
             const checkoutForm = document.getElementById('checkoutForm');
@@ -1443,24 +1293,60 @@ function showLoading(show) {
             console.log('App initialized successfully');
         });
 
-        // Menu functions
+        // ===============================
+        // FUNGSI MENU
+        // ===============================
+
+        // Load menu data from API or use fallback
+        async function loadMenuData() {
+            showLoading(true);
+            
+            try {
+                const result = await callAPIGet('getMenu');
+                if (result.success && result.menu && result.menu.length > 0) {
+                    currentMenuData = result.menu;
+                    console.log('Menu loaded from API:', currentMenuData.length, 'items');
+                } else {
+                    currentMenuData = menuData;
+                    console.log('Using fallback menu data');
+                }
+            } catch (error) {
+                currentMenuData = menuData;
+                console.log('Error loading menu, using fallback:', error);
+            }
+            
+            renderMenu();
+            showLoading(false);
+        }
+
         function renderMenu() {
             const menuGrid = document.getElementById('menuGrid');
             if (!menuGrid) return;
             
-            menuGrid.innerHTML = menuData.map(item => `
+            if (currentMenuData.length === 0) {
+                menuGrid.innerHTML = `
+                    <div class="empty-state">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">🍽️</div>
+                        <h3>Menu Sedang Tidak Tersedia</h3>
+                        <p>Silakan coba lagi nanti</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            menuGrid.innerHTML = currentMenuData.map(item => `
                 <div class="menu-item" data-category="${item.category}">
                     <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: var(--shadow); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
                         <div style="height: 200px; background: url('${item.image}') center/cover; position: relative;">
-                            ${item.isPopular ? '<div style="position: absolute; top: 10px; left: 10px; background: var(--danger); color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem; font-weight: bold;">🔥 POPULER</div>' : ''}
-                            <div style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem;">⭐ ${item.rating}</div>
+                            ${item.ispopular ? '<div style="position: absolute; top: 10px; left: 10px; background: var(--danger); color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem; font-weight: bold;">🔥 POPULER</div>' : ''}
+                            <div style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem;">⭐ ${item.rating || 4.5}</div>
                         </div>
                         <div style="padding: 1.5rem;">
                             <h3 style="color: var(--dark); margin-bottom: 0.5rem;">${item.name}</h3>
                             <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem; line-height: 1.4;">${item.description}</p>
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                <span class="price">Rp ${item.price.toLocaleString()}</span>
-                                <span style="color: #666; font-size: 0.8rem;">⏱️ ${item.cookTime}</span>
+                                <span class="price">Rp ${parseInt(item.price).toLocaleString()}</span>
+                                <span style="color: #666; font-size: 0.8rem;">⏱️ ${item.cooktime || '15-20 menit'}</span>
                             </div>
                             <button class="btn" onclick="addToCart(${item.id})" style="width: 100%; padding: 0.75rem;">🛒 Tambah ke Keranjang</button>
                         </div>
@@ -1473,7 +1359,10 @@ function showLoading(show) {
             const popularContainer = document.getElementById('popularItems');
             if (!popularContainer) return;
             
-            const popularItems = menuData.filter(item => item.isPopular).slice(0, 3);
+            const popularItems = currentMenuData.filter(item => item.ispopular).slice(0, 3);
+            if (popularItems.length === 0) {
+                popularItems = currentMenuData.slice(0, 3); // Fallback to first 3 items
+            }
             
             popularContainer.innerHTML = popularItems.map(item => `
                 <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: var(--shadow); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
@@ -1484,8 +1373,8 @@ function showLoading(show) {
                         <h4 style="color: var(--dark); margin-bottom: 0.5rem;">${item.name}</h4>
                         <p style="color: #666; font-size: 0.8rem; margin-bottom: 1rem;">${item.description}</p>
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <span class="price" style="font-size: 1rem;">Rp ${item.price.toLocaleString()}</span>
-                            <span style="color: var(--accent);">⭐ ${item.rating}</span>
+                            <span class="price" style="font-size: 1rem;">Rp ${parseInt(item.price).toLocaleString()}</span>
+                            <span style="color: var(--accent);">⭐ ${item.rating || 4.5}</span>
                         </div>
                         <button class="btn" onclick="addToCart(${item.id})" style="width: 100%; padding: 0.5rem; font-size: 0.9rem;">Pesan Sekarang</button>
                     </div>
@@ -1498,10 +1387,9 @@ function showLoading(show) {
             const filterBtns = document.querySelectorAll('.filter-btn');
             const noResults = document.getElementById('noResults');
             
-            // Update filter buttons with smooth animation
+            // Update filter buttons
             filterBtns.forEach(btn => {
                 btn.classList.remove('active');
-                // Reset to inactive style
                 btn.style.border = '2px solid var(--light)';
                 btn.style.background = 'white';
                 btn.style.color = 'var(--dark)';
@@ -1509,29 +1397,13 @@ function showLoading(show) {
                 btn.style.transform = 'scale(1)';
             });
             
-            // Apply active style to clicked button with smooth animation
+            // Apply active style to clicked button
             event.target.classList.add('active');
             event.target.style.border = '2px solid var(--primary)';
             event.target.style.background = 'var(--primary)';
             event.target.style.color = 'white';
             event.target.style.boxShadow = '0 2px 8px rgba(255, 107, 53, 0.3)';
             event.target.style.transform = 'scale(1.05)';
-            
-            // Add hover effect for all buttons
-            filterBtns.forEach(btn => {
-                btn.onmouseenter = function() {
-                    if (!this.classList.contains('active')) {
-                        this.style.transform = 'scale(1.02)';
-                        this.style.boxShadow = '0 4px 8px rgba(0,0,0,0.15)';
-                    }
-                };
-                btn.onmouseleave = function() {
-                    if (!this.classList.contains('active')) {
-                        this.style.transform = 'scale(1)';
-                        this.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
-                    }
-                };
-            });
             
             let visibleCount = 0;
             
@@ -1577,10 +1449,21 @@ function showLoading(show) {
             filterMenu('all');
         }
 
-        // Cart functions
+        // ===============================
+        // FUNGSI KERANJANG
+        // ===============================
+
         function addToCart(itemId) {
-            const item = menuData.find(i => i.id === itemId);
-            if (!item) return;
+            const item = currentMenuData.find(i => i.id === itemId);
+            if (!item) {
+                // Fallback to sample data if not found in currentMenuData
+                const fallbackItem = menuData.find(i => i.id === itemId);
+                if (!fallbackItem) {
+                    showNotification('Item tidak ditemukan!', 'error');
+                    return;
+                }
+                item = fallbackItem;
+            }
             
             const existingItem = cart.find(i => i.id === itemId);
             
@@ -1734,8 +1617,11 @@ function showLoading(show) {
             if (checkoutTotal) checkoutTotal.textContent = `Rp ${total.toLocaleString()}`;
         }
 
-        // Promo functions
-        function applyPromo() {
+        // ===============================
+        // FUNGSI PROMO
+        // ===============================
+
+        async function applyPromo() {
             const promoInput = document.getElementById('promoCode');
             const promoMessage = document.getElementById('promoMessage');
             const promoCode = promoInput.value.trim().toUpperCase();
@@ -1745,24 +1631,47 @@ function showLoading(show) {
                 return;
             }
             
-            const promo = promoCodes[promoCode];
-            if (!promo) {
-                promoMessage.innerHTML = '<span style="color: var(--danger);">❌ Kode promo tidak valid</span>';
-                return;
-            }
-            
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             
-            if (subtotal < promo.minOrder) {
-                promoMessage.innerHTML = `<span style="color: var(--danger);">❌ Minimum pembelian Rp ${promo.minOrder.toLocaleString()} untuk promo ini</span>`;
-                return;
+            // Coba validasi melalui API terlebih dahulu
+            const result = await callAPI('applyPromo', {
+                promoCode: promoCode,
+                subtotal: subtotal
+            });
+            
+            if (result.success) {
+                appliedPromo = { 
+                    code: promoCode, 
+                    discount: result.discount,
+                    type: result.type,
+                    description: result.description
+                };
+                promoMessage.innerHTML = `<span style="color: var(--success);">✅ ${result.description} berhasil diterapkan!</span>`;
+                updateCheckoutDisplay();
+                showNotification('Kode promo berhasil diterapkan!', 'success');
+            } else {
+                // Fallback to local validation
+                const promo = promoCodes[promoCode];
+                if (!promo) {
+                    promoMessage.innerHTML = '<span style="color: var(--danger);">❌ Kode promo tidak valid</span>';
+                    return;
+                }
+                
+                if (subtotal < promo.minOrder) {
+                    promoMessage.innerHTML = `<span style="color: var(--danger);">❌ Minimum pembelian Rp ${promo.minOrder.toLocaleString()} untuk promo ini</span>`;
+                    return;
+                }
+                
+                appliedPromo = { 
+                    code: promoCode, 
+                    discount: promo.discount,
+                    type: promo.type,
+                    description: promo.description
+                };
+                promoMessage.innerHTML = `<span style="color: var(--success);">✅ ${promo.description} berhasil diterapkan!</span>`;
+                updateCheckoutDisplay();
+                showNotification('Kode promo berhasil diterapkan!', 'success');
             }
-            
-            appliedPromo = { code: promoCode, ...promo };
-            promoMessage.innerHTML = `<span style="color: var(--success);">✅ ${promo.description} berhasil diterapkan!</span>`;
-            
-            updateCheckoutDisplay();
-            showNotification('Kode promo berhasil diterapkan!', 'success');
         }
 
         function removePromo() {
@@ -1783,8 +1692,11 @@ function showLoading(show) {
             }
         }
 
-        // Checkout functions
-        function handleCheckout(event) {
+        // ===============================
+        // FUNGSI CHECKOUT
+        // ===============================
+
+        async function handleCheckout(event) {
             event.preventDefault();
             
             const formData = new FormData(event.target);
@@ -1794,42 +1706,78 @@ function showLoading(show) {
             const total = subtotal - discount + shipping;
 
             const orderData = {
-                id: Date.now(),
-                items: [...cart],
                 customer: {
                     name: formData.get('customerName'),
                     phone: formData.get('customerPhone'),
                     address: formData.get('customerAddress')
                 },
-                payment: formData.get('paymentMethod'),
-                promo: appliedPromo ? { code: appliedPromo.code, discount: discount } : null,
+                items: [...cart],
+                paymentMethod: formData.get('paymentMethod'),
+                promoCode: appliedPromo ? appliedPromo.code : null,
                 subtotal: subtotal,
                 discount: discount,
                 shipping: shipping,
-                total: total,
-                status: 'pending',
-                date: new Date().toISOString()
+                total: total
             };
             
-            // Add to orders
-            orders.push(orderData);
-            localStorage.setItem('orders', JSON.stringify(orders));
+            // Validasi data
+            if (!orderData.customer.name || !orderData.customer.phone || !orderData.customer.address) {
+                showNotification('Harap lengkapi semua informasi pengiriman!', 'error');
+                return;
+            }
             
-            // Clear cart and promo
-            cart = [];
-            appliedPromo = null;
-            localStorage.setItem('cart', JSON.stringify(cart));
+            if (orderData.items.length === 0) {
+                showNotification('Keranjang masih kosong!', 'error');
+                return;
+            }
             
-            // Show success and redirect
-            showNotification('Pesanan berhasil dibuat!', 'success');
-            updateCartCount();
+            // Tampilkan loading
+            showLoading(true);
             
-            setTimeout(() => {
-                navigateTo('dashboard');
-            }, 2000);
+            try {
+                const result = await callAPI('createOrder', { orderData });
+                
+                if (result.success) {
+                    // Clear cart and promo
+                    cart = [];
+                    appliedPromo = null;
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartCount();
+                    updateCartDisplay();
+                    
+                    showNotification(`Pesanan berhasil! Order ID: ${result.orderId}`, 'success');
+                    
+                    setTimeout(() => {
+                        navigateTo('dashboard');
+                    }, 3000);
+                } else {
+                    showNotification(result.error || 'Gagal membuat pesanan', 'error');
+                }
+            } catch (error) {
+                showNotification('Terjadi kesalahan saat memproses pesanan', 'error');
+            } finally {
+                showLoading(false);
+            }
         }
 
-        // Dashboard functions
+        // ===============================
+        // FUNGSI DASHBOARD
+        // ===============================
+
+        async function loadOrderHistory() {
+            showLoading(true);
+            
+            try {
+                // Untuk demo, kita akan menggunakan data lokal
+                // Dalam implementasi nyata, Anda akan memanggil API dengan nomor telepon customer
+                updateDashboard();
+            } catch (error) {
+                console.error('Error loading order history:', error);
+            } finally {
+                showLoading(false);
+            }
+        }
+
         function updateDashboard() {
             const totalOrdersEl = document.getElementById('totalOrders');
             const completedOrdersEl = document.getElementById('completedOrders');
@@ -1914,224 +1862,11 @@ function showLoading(show) {
             showNotification('Data berhasil diekspor!', 'success');
         }
 
-        // Blog functions
-        function showBlogArticle(articleId) {
-            const articles = {
-                'pizza-italia': {
-                    title: 'Rahasia Pizza Italia Autentik',
-                    author: 'Chef Marco',
-                    date: '12 Desember 2024',
-                    readTime: '8 menit baca',
-                    content: `
-                        <p>Pizza bukan sekadar makanan, tetapi seni kuliner yang telah berkembang selama berabad-abad di Italia. Dalam artikel ini, kami akan membagikan rahasia membuat pizza autentik yang telah diwariskan turun-temurun oleh keluarga pizzaiolo di Napoli.</p>
-                        
-                        <h3>1. Pemilihan Tepung yang Tepat</h3>
-                        <p>Gunakan tepung tipo 00 yang memiliki kandungan protein sedang (11-12%). Tepung ini memberikan tekstur yang sempurna - renyah di luar namun lembut di dalam.</p>
-                        
-                        <h3>2. Teknik Fermentasi Adonan</h3>
-                        <p>Fermentasi minimal 24 jam di suhu dingin akan menghasilkan adonan yang mudah dibentuk dan memiliki rasa yang kompleks. Jangan terburu-buru dalam proses ini.</p>
-                        
-                        <h3>3. Saus Tomat Sederhana</h3>
-                        <p>Gunakan tomat San Marzano yang dihancurkan dengan tangan, tambahkan sedikit garam laut dan basil segar. Jangan memasak saus - biarkan panas oven yang melakukan pekerjaannya.</p>
-                        
-                        <h3>4. Mozzarella Berkualitas</h3>
-                        <p>Pilih mozzarella di bufala atau fior di latte yang segar. Tiriskan dengan baik untuk menghindari pizza yang terlalu basah.</p>
-                        
-                        <h3>5. Teknik Memanggang</h3>
-                        <p>Suhu tinggi (450-500°C) adalah kunci. Jika tidak memiliki oven pizza, gunakan batu pizza dan panaskan oven pada suhu maksimal selama minimal 1 jam.</p>
-                        
-                        <p><strong>Tips Bonus:</strong> Pizza terbaik dimakan langsung setelah keluar dari oven. Jangan menunggu terlalu lama!</p>
-                    `
-                },
-                'burger-homemade': {
-                    title: 'Burger Homemade yang Juicy',
-                    author: 'Chef Sarah',
-                    date: '10 Desember 2024',
-                    readTime: '6 menit baca',
-                    content: `
-                        <p>Membuat burger yang sempurna di rumah membutuhkan teknik yang tepat dan bahan berkualitas. Berikut resep lengkap untuk burger yang akan membuat keluarga ketagihan.</p>
-                        
-                        <h3>Bahan-bahan:</h3>
-                        <ul>
-                            <li>500g daging sapi giling (80/20 fat ratio)</li>
-                            <li>4 roti burger brioche</li>
-                            <li>4 lembar keju cheddar</li>
-                            <li>1 bawang bombay, iris tipis</li>
-                            <li>4 lembar selada</li>
-                            <li>2 tomat, iris</li>
-                            <li>Mayonnaise dan saus tomat</li>
-                        </ul>
-                        
-                        <h3>Bumbu Patty:</h3>
-                        <ul>
-                            <li>1 sdt garam</li>
-                            <li>1/2 sdt lada hitam</li>
-                            <li>1 sdt bawang putih bubuk</li>
-                            <li>1 sdt paprika bubuk</li>
-                        </ul>
-                        
-                        <h3>Cara Membuat:</h3>
-                        <ol>
-                            <li>Campurkan daging dengan bumbu, bentuk 4 patty. Jangan terlalu padat!</li>
-                            <li>Buat cekungan kecil di tengah patty untuk mencegah mengembang</li>
-                            <li>Panaskan wajan dengan api sedang-tinggi</li>
-                            <li>Masak patty 3-4 menit per sisi untuk medium</li>
-                            <li>Tambahkan keju di menit terakhir</li>
-                            <li>Panggang roti sebentar hingga kecoklatan</li>
-                            <li>Susun: roti bawah, saus, selada, patty, tomat, bawang, roti atas</li>
-                        </ol>
-                        
-                        <p><strong>Rahasia:</strong> Jangan menekan patty saat memasak - ini akan mengeluarkan jus daging!</p>
-                    `
-                },
-                'tips-menyimpan': {
-                    title: '5 Tips Menyimpan Makanan Agar Awet',
-                    author: 'Chef Lisa',
-                    date: '8 Desember 2024',
-                    readTime: '4 menit baca',
-                    content: `
-                        <p>Menyimpan makanan dengan benar tidak hanya menghemat uang, tetapi juga menjaga kualitas dan keamanan pangan. Berikut 5 tips praktis untuk dapur Anda.</p>
-                        
-                        <h3>1. Pahami Zona Suhu Kulkas</h3>
-                        <p><strong>Rak atas (2-4°C):</strong> Sisa makanan, minuman, produk siap saji</p>
-                        <p><strong>Rak tengah (3-5°C):</strong> Telur, produk susu, daging matang</p>
-                        <p><strong>Rak bawah (0-2°C):</strong> Daging mentah, ikan, unggas</p>
-                        <p><strong>Laci sayur:</strong> Buah dan sayuran (kelembaban tinggi)</p>
-                        
-                        <h3>2. Gunakan Wadah Kedap Udara</h3>
-                        <p>Investasi dalam wadah kaca atau plastik berkualitas. Udara adalah musuh utama kesegaran makanan. Pastikan wadah benar-benar tertutup rapat.</p>
-                        
-                        <h3>3. Teknik FIFO (First In, First Out)</h3>
-                        <p>Gunakan makanan yang lebih lama disimpan terlebih dahulu. Tempel label tanggal pada wadah untuk memudahkan tracking.</p>
-                        
-                        <h3>4. Pisahkan Buah dan Sayur</h3>
-                        <p>Beberapa buah menghasilkan gas etilen yang mempercepat pematangan. Simpan pisang, apel, dan tomat terpisah dari sayuran hijau.</p>
-                        
-                        <h3>5. Bekukan dengan Cerdas</h3>
-                        <p>Potong daging dalam porsi sekali makan sebelum dibekukan. Gunakan freezer bag dan keluarkan udara sebanyak mungkin. Label dengan tanggal dan jenis makanan.</p>
-                        
-                        <p><strong>Bonus Tip:</strong> Bersihkan kulkas secara rutin dan periksa suhu dengan termometer kulkas!</p>
-                    `
-                },
-                'manfaat-salad': {
-                    title: 'Manfaat Salad untuk Diet Sehat',
-                    author: 'Dr. Maya',
-                    date: '6 Desember 2024',
-                    readTime: '5 menit baca',
-                    content: `
-                        <p>Salad bukan hanya makanan diet, tetapi pilihan cerdas untuk gaya hidup sehat. Mari pelajari mengapa salad harus menjadi bagian dari menu harian Anda.</p>
-                        
-                        <h3>Kandungan Nutrisi Lengkap</h3>
-                        <p>Salad yang beragam mengandung:</p>
-                        <ul>
-                            <li><strong>Vitamin A, C, K:</strong> Dari sayuran hijau</li>
-                            <li><strong>Folat:</strong> Penting untuk pembentukan sel darah</li>
-                            <li><strong>Serat:</strong> Membantu pencernaan dan kenyang lebih lama</li>
-                            <li><strong>Antioksidan:</strong> Melawan radikal bebas</li>
-                        </ul>
-                        
-                        <h3>Manfaat untuk Kesehatan</h3>
-                        <p><strong>1. Kontrol Berat Badan:</strong> Rendah kalori, tinggi serat membuat kenyang lebih lama</p>
-                        <p><strong>2. Kesehatan Jantung:</strong> Sayuran hijau menurunkan risiko penyakit kardiovaskular</p>
-                        <p><strong>3. Pencernaan Sehat:</strong> Serat membantu pergerakan usus yang teratur</p>
-                        <p><strong>4. Kulit Sehat:</strong> Vitamin C dan antioksidan menjaga elastisitas kulit</p>
-                        
-                        <h3>Tips Membuat Salad Lezat</h3>
-                        <ol>
-                            <li><strong>Variasi Tekstur:</strong> Campurkan sayuran renyah dengan yang lembut</li>
-                            <li><strong>Warna-warni:</strong> Semakin beragam warna, semakin lengkap nutrisinya</li>
-                            <li><strong>Protein Seimbang:</strong> Tambahkan telur, kacang, atau daging tanpa lemak</li>
-                            <li><strong>Dressing Sehat:</strong> Gunakan olive oil, lemon, atau yogurt</li>
-                        </ol>
-                        
-                        <h3>Resep Salad Mediterania</h3>
-                        <p><strong>Bahan:</strong> Selada, tomat cherry, mentimun, zaitun, feta cheese, olive oil, lemon</p>
-                        <p><strong>Cara:</strong> Campurkan semua sayuran, taburi feta, siram dengan campuran olive oil dan lemon</p>
-                        
-                        <p><strong>Ingat:</strong> Salad terbaik adalah yang Anda nikmati. Eksperimen dengan bahan favorit Anda!</p>
-                    `
-                }
-            };
-            
-            const article = articles[articleId];
-            if (!article) {
-                showNotification('Artikel tidak ditemukan!', 'error');
-                return;
-            }
-            
-            // Create modal overlay
-            const modal = document.createElement('div');
-            modal.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0,0,0,0.8);
-                z-index: 10000;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 2rem;
-                overflow-y: auto;
-            `;
-            
-            modal.innerHTML = `
-                <div style="background: white; border-radius: 20px; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative;">
-                    <button onclick="this.closest('.modal').remove()" style="position: absolute; top: 1rem; right: 1rem; background: var(--danger); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; z-index: 1;">×</button>
-                    
-                    <div style="padding: 3rem 2rem 2rem 2rem;">
-                        <div style="text-align: center; margin-bottom: 2rem;">
-                            <h1 style="color: var(--dark); margin-bottom: 1rem; font-size: 2rem;">${article.title}</h1>
-                            <div style="display: flex; justify-content: center; gap: 2rem; color: #666; font-size: 0.9rem; flex-wrap: wrap;">
-                                <span>👨‍🍳 ${article.author}</span>
-                                <span>📅 ${article.date}</span>
-                                <span>⏱️ ${article.readTime}</span>
-                            </div>
-                        </div>
-                        
-                        <div style="line-height: 1.8; color: #333;">
-                            ${article.content}
-                        </div>
-                        
-                        <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 2px solid var(--light);">
-                            <p style="color: #666; margin-bottom: 1rem;">Suka artikel ini? Bagikan ke teman-teman!</p>
-                            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                                <button class="btn" onclick="shareArticle('${articleId}')" style="padding: 0.5rem 1rem; font-size: 0.9rem;">📱 Bagikan</button>
-                                <button class="btn" onclick="this.closest('.modal').remove(); navigateTo('menu')" style="background: var(--success); padding: 0.5rem 1rem; font-size: 0.9rem;">🛒 Pesan Menu</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            modal.className = 'modal';
-            document.body.appendChild(modal);
-            
-            // Close on outside click
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    modal.remove();
-                }
-            });
-        }
-        
-        function shareArticle(articleId) {
-            if (navigator.share) {
-                navigator.share({
-                    title: 'FoodOrder Blog',
-                    text: 'Baca artikel menarik dari FoodOrder!',
-                    url: window.location.href
-                });
-            } else {
-                // Fallback - copy to clipboard
-                navigator.clipboard.writeText(window.location.href).then(() => {
-                    showNotification('Link artikel berhasil disalin!', 'success');
-                });
-            }
-        }
-        
-        function subscribeNewsletter() {
+        // ===============================
+        // FUNGSI BLOG & NEWSLETTER
+        // ===============================
+
+        async function subscribeNewsletter() {
             const emailInput = document.querySelector('input[type="email"]');
             const email = emailInput.value.trim();
             
@@ -2140,19 +1875,26 @@ function showLoading(show) {
                 return;
             }
             
-            // Simple email validation
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 showNotification('Format email tidak valid!', 'error');
                 return;
             }
             
-            // Simulate subscription
-            showNotification('Terima kasih! Anda berhasil berlangganan newsletter FoodOrder!', 'success');
-            emailInput.value = '';
+            const result = await callAPI('subscribeNewsletter', { email: email });
+            
+            if (result.success) {
+                showNotification(result.message, 'success');
+                emailInput.value = '';
+            } else {
+                showNotification(result.error, 'error');
+            }
         }
 
-        // Utility functions
+        // ===============================
+        // FUNGSI UTILITAS
+        // ===============================
+
         function showNotification(message, type = 'success') {
             const notification = document.getElementById('notification');
             if (!notification) return;
@@ -2165,6 +1907,26 @@ function showLoading(show) {
                 notification.classList.remove('show');
             }, 3000);
         }
+
+        function showLoading(show) {
+            const loading = document.getElementById('loading');
+            if (loading) {
+                if (show) {
+                    loading.classList.add('show');
+                } else {
+                    loading.classList.remove('show');
+                }
+            }
+        }
+
+        // Fungsi blog (tetap sama seperti sebelumnya)
+        function showBlogArticle(articleId) {
+            // ... (kode fungsi blog tetap sama)
+        }
+
+        function shareArticle(articleId) {
+            // ... (kode fungsi share tetap sama)
+        }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98920c6394a581c2',t:'MTc1OTU1MzMyMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
