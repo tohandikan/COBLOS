@@ -1921,11 +1921,152 @@
 
         // Fungsi blog (tetap sama seperti sebelumnya)
         function showBlogArticle(articleId) {
-            // ... (kode fungsi blog tetap sama)
+            const articles = {
+                'pizza-italia': {
+                    title: 'Rahasia Pizza Italia Autentik',
+                    author: 'Chef Marco',
+                    date: '12 Desember 2024',
+                    readTime: '8 menit baca',
+                    content: `
+                        <p>Pizza bukan sekadar makanan, tetapi seni kuliner yang telah berkembang selama berabad-abad di Italia. Dalam artikel ini, kami akan membagikan rahasia membuat pizza autentik yang telah diwariskan turun-temurun oleh keluarga pizzaiolo di Napoli.</p>
+                        
+                        <h3>1. Pemilihan Tepung yang Tepat</h3>
+                        <p>Gunakan tepung tipo 00 yang memiliki kandungan protein sedang (11-12%). Tepung ini memberikan tekstur yang sempurna - renyah di luar namun lembut di dalam.</p>
+                        
+                        <h3>2. Teknik Fermentasi Adonan</h3>
+                        <p>Fermentasi minimal 24 jam di suhu dingin akan menghasilkan adonan yang mudah dibentuk dan memiliki rasa yang kompleks. Jangan terburu-buru dalam proses ini.</p>
+                        
+                        <h3>3. Saus Tomat Sederhana</h3>
+                        <p>Gunakan tomat San Marzano yang dihancurkan dengan tangan, tambahkan sedikit garam laut dan basil segar. Jangan memasak saus - biarkan panas oven yang melakukan pekerjaannya.</p>
+                        
+                        <h3>4. Mozzarella Berkualitas</h3>
+                        <p>Pilih mozzarella di bufala atau fior di latte yang segar. Tiriskan dengan baik untuk menghindari pizza yang terlalu basah.</p>
+                        
+                        <h3>5. Teknik Memanggang</h3>
+                        <p>Suhu tinggi (450-500°C) adalah kunci. Jika tidak memiliki oven pizza, gunakan batu pizza dan panaskan oven pada suhu maksimal selama minimal 1 jam.</p>
+                        
+                        <p><strong>Tips Bonus:</strong> Pizza terbaik dimakan langsung setelah keluar dari oven. Jangan menunggu terlalu lama!</p>
+                    `
+                },
+                'burger-homemade': {
+                    title: 'Burger Homemade yang Juicy',
+                    author: 'Chef Sarah',
+                    date: '10 Desember 2024',
+                    readTime: '6 menit baca',
+                    content: `
+                        <p>Membuat burger yang sempurna di rumah membutuhkan teknik yang tepat dan bahan berkualitas. Berikut resep lengkap untuk burger yang akan membuat keluarga ketagihan.</p>
+                        
+                        <h3>Bahan-bahan:</h3>
+                        <ul>
+                            <li>500g daging sapi giling (80/20 fat ratio)</li>
+                            <li>4 roti burger brioche</li>
+                            <li>4 lembar keju cheddar</li>
+                            <li>1 bawang bombay, iris tipis</li>
+                            <li>4 lembar selada</li>
+                            <li>2 tomat, iris</li>
+                            <li>Mayonnaise dan saus tomat</li>
+                        </ul>
+                        
+                        <h3>Bumbu Patty:</h3>
+                        <ul>
+                            <li>1 sdt garam</li>
+                            <li>1/2 sdt lada hitam</li>
+                            <li>1 sdt bawang putih bubuk</li>
+                            <li>1 sdt paprika bubuk</li>
+                        </ul>
+                        
+                        <h3>Cara Membuat:</h3>
+                        <ol>
+                            <li>Campurkan daging dengan bumbu, bentuk 4 patty. Jangan terlalu padat!</li>
+                            <li>Buat cekungan kecil di tengah patty untuk mencegah mengembang</li>
+                            <li>Panaskan wajan dengan api sedang-tinggi</li>
+                            <li>Masak patty 3-4 menit per sisi untuk medium</li>
+                            <li>Tambahkan keju di menit terakhir</li>
+                            <li>Panggang roti sebentar hingga kecoklatan</li>
+                            <li>Susun: roti bawah, saus, selada, patty, tomat, bawang, roti atas</li>
+                        </ol>
+                        
+                        <p><strong>Rahasia:</strong> Jangan menekan patty saat memasak - ini akan mengeluarkan jus daging!</p>
+                    `
+                }
+            };
+            
+            const article = articles[articleId];
+            if (!article) {
+                showNotification('Artikel tidak ditemukan!', 'error');
+                return;
+            }
+            
+            // Create modal overlay
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 2rem;
+                overflow-y: auto;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: white; border-radius: 20px; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative;">
+                    <button onclick="this.closest('.modal').remove()" style="position: absolute; top: 1rem; right: 1rem; background: var(--danger); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; z-index: 1;">×</button>
+                    
+                    <div style="padding: 3rem 2rem 2rem 2rem;">
+                        <div style="text-align: center; margin-bottom: 2rem;">
+                            <h1 style="color: var(--dark); margin-bottom: 1rem; font-size: 2rem;">${article.title}</h1>
+                            <div style="display: flex; justify-content: center; gap: 2rem; color: #666; font-size: 0.9rem; flex-wrap: wrap;">
+                                <span>👨‍🍳 ${article.author}</span>
+                                <span>📅 ${article.date}</span>
+                                <span>⏱️ ${article.readTime}</span>
+                            </div>
+                        </div>
+                        
+                        <div style="line-height: 1.8; color: #333;">
+                            ${article.content}
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 2px solid var(--light);">
+                            <p style="color: #666; margin-bottom: 1rem;">Suka artikel ini? Bagikan ke teman-teman!</p>
+                            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                                <button class="btn" onclick="shareArticle('${articleId}')" style="padding: 0.5rem 1rem; font-size: 0.9rem;">📱 Bagikan</button>
+                                <button class="btn" onclick="this.closest('.modal').remove(); navigateTo('menu')" style="background: var(--success); padding: 0.5rem 1rem; font-size: 0.9rem;">🛒 Pesan Menu</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.className = 'modal';
+            document.body.appendChild(modal);
+            
+            // Close on outside click
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
         }
-
+        
         function shareArticle(articleId) {
-            // ... (kode fungsi share tetap sama)
+            if (navigator.share) {
+                navigator.share({
+                    title: 'FoodOrder Blog',
+                    text: 'Baca artikel menarik dari FoodOrder!',
+                    url: window.location.href
+                });
+            } else {
+                // Fallback - copy to clipboard
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    showNotification('Link artikel berhasil disalin!', 'success');
+                });
+            }
         }
     </script>
 </body>
