@@ -60,6 +60,7 @@
             font-weight: bold;
             color: var(--primary);
             text-decoration: none;
+            cursor: pointer;
         }
 
         .nav-links {
@@ -74,6 +75,7 @@
             font-weight: 500;
             transition: color 0.3s ease;
             position: relative;
+            cursor: pointer;
         }
 
         .nav-links a:hover,
@@ -99,6 +101,7 @@
             border-radius: 25px;
             text-decoration: none;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .cart-icon:hover {
@@ -467,18 +470,19 @@
     <!-- Header -->
     <header class="header">
         <nav class="nav">
-            <a href="#" class="logo" onclick="showPage('home')">🍕 FoodOrder</a>
+            <div class="logo" onclick="navigateTo('home')">🍕 FoodOrder</div>
             <ul class="nav-links">
-                <li><a href="#" onclick="showPage('home')" class="nav-link active">Beranda</a></li>
-                <li><a href="#" onclick="showPage('menu')" class="nav-link">Menu</a></li>
-                <li><a href="#" onclick="showPage('about')" class="nav-link">Tentang</a></li>
-                <li><a href="#" onclick="showPage('dashboard')" class="nav-link">Dashboard</a></li>
-                <li><a href="#" onclick="showPage('cart')" class="nav-link">Keranjang</a></li>
+                <li><a onclick="navigateTo('home')" class="nav-link active">Beranda</a></li>
+                <li><a onclick="navigateTo('menu')" class="nav-link">Menu</a></li>
+                <li><a onclick="navigateTo('promo')" class="nav-link">Promo</a></li>
+                <li><a onclick="navigateTo('blog')" class="nav-link">Blog</a></li>
+                <li><a onclick="navigateTo('about')" class="nav-link">Tentang</a></li>
+                <li><a onclick="navigateTo('dashboard')" class="nav-link">Dashboard</a></li>
             </ul>
-            <a href="#" class="cart-icon" onclick="showPage('cart')">
+            <div class="cart-icon" onclick="navigateTo('cart')">
                 🛒 Keranjang
                 <span class="cart-count" id="cartCount">0</span>
-            </a>
+            </div>
         </nav>
     </header>
 
@@ -492,8 +496,9 @@
                     <h1 style="font-size: 3rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">🍕 Selamat Datang di FoodOrder!</h1>
                     <p style="font-size: 1.3rem; margin-bottom: 2rem; opacity: 0.9;">Pesan makanan favorit Anda dengan mudah dan cepat. Lebih dari 1000+ pelanggan puas!</p>
                     <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                        <button class="btn" onclick="showPage('menu')" style="background: white; color: var(--primary); font-weight: bold;">🛒 Pesan Sekarang</button>
-                        <button class="btn" onclick="showPage('about')" style="background: transparent; border: 2px solid white;">📖 Pelajari Lebih Lanjut</button>
+                        <button class="btn" onclick="navigateTo('menu')" style="background: white; color: var(--primary); font-weight: bold;">🛒 Pesan Sekarang</button>
+                        <button class="btn" onclick="navigateTo('promo')" style="background: transparent; border: 2px solid white;">🎉 Lihat Promo</button>
+                        <button class="btn" onclick="navigateTo('about')" style="background: transparent; border: 2px solid white;">📖 Pelajari Lebih Lanjut</button>
                     </div>
                 </div>
 
@@ -504,15 +509,15 @@
                         <p style="color: #666; margin-top: 0.5rem;">Pelanggan Puas</p>
                     </div>
                     <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: var(--shadow); text-align: center;">
-                        <div style="font-size: 2.5rem; color: var(--success); font-weight: bold;">28</div>
+                        <div style="font-size: 2.5rem; color: var(--success); font-weight: bold;">35</div>
                         <p style="color: #666; margin-top: 0.5rem;">Menu Pilihan</p>
                     </div>
                     <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: var(--shadow); text-align: center;">
-                        <div style="font-size: 2.5rem; color: var(--accent); font-weight: bold;">30</div>
+                        <div style="font-size: 2.5rem; color: var(--accent); font-weight: bold;">25</div>
                         <p style="color: #666; margin-top: 0.5rem;">Menit Pengiriman</p>
                     </div>
                     <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: var(--shadow); text-align: center;">
-                        <div style="font-size: 2.5rem; color: var(--danger); font-weight: bold;">4.8</div>
+                        <div style="font-size: 2.5rem; color: var(--danger); font-weight: bold;">4.9</div>
                         <p style="color: #666; margin-top: 0.5rem;">Rating Bintang</p>
                     </div>
                 </div>
@@ -523,73 +528,39 @@
                     <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: var(--shadow); text-align: center; transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
                         <div style="font-size: 3rem; margin-bottom: 1rem;">🍕</div>
                         <h3 style="color: var(--dark); margin-bottom: 1rem;">Menu Beragam</h3>
-                        <p style="color: #666; margin-bottom: 1.5rem;">Pizza, burger, pasta, salad, dan dessert dengan kualitas premium</p>
-                        <button class="btn" onclick="showPage('menu')" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Lihat Menu</button>
+                        <p style="color: #666; margin-bottom: 1.5rem;">Pizza, burger, pasta, salad, dan dessert dengan kualitas premium dari chef berpengalaman</p>
+                        <button class="btn" onclick="navigateTo('menu')" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Lihat Menu</button>
                     </div>
                     
                     <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: var(--shadow); text-align: center; transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
                         <div style="font-size: 3rem; margin-bottom: 1rem;">🚚</div>
                         <h3 style="color: var(--dark); margin-bottom: 1rem;">Pengiriman Cepat</h3>
-                        <p style="color: #666; margin-bottom: 1.5rem;">Diantar langsung ke rumah Anda dalam waktu maksimal 30 menit</p>
-                        <button class="btn" onclick="showPage('menu')" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Pesan Sekarang</button>
+                        <p style="color: #666; margin-bottom: 1.5rem;">Diantar langsung ke rumah Anda dalam waktu maksimal 25 menit dengan kondisi masih hangat</p>
+                        <button class="btn" onclick="navigateTo('menu')" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Pesan Sekarang</button>
                     </div>
                     
                     <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: var(--shadow); text-align: center; transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
                         <div style="font-size: 3rem; margin-bottom: 1rem;">💳</div>
                         <h3 style="color: var(--dark); margin-bottom: 1rem;">Pembayaran Mudah</h3>
-                        <p style="color: #666; margin-bottom: 1.5rem;">COD, transfer bank, atau e-wallet. Pilih sesuai keinginan Anda</p>
-                        <button class="btn" onclick="showPage('checkout')" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Info Pembayaran</button>
+                        <p style="color: #666; margin-bottom: 1.5rem;">COD, transfer bank, atau e-wallet. Pilih sesuai keinginan Anda dengan sistem keamanan terjamin</p>
+                        <button class="btn" onclick="navigateTo('checkout')" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Info Pembayaran</button>
                     </div>
                 </div>
 
                 <!-- Popular Items Section -->
-                <h2 style="text-align: center; margin-bottom: 2rem; font-size: 2rem;">Menu Populer</h2>
+                <h2 style="text-align: center; margin-bottom: 2rem; font-size: 2rem;">Menu Populer Hari Ini</h2>
                 <div id="popularItems" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
                     <!-- Popular items will be populated by JavaScript -->
-                </div>
-
-                <!-- Testimonials Section -->
-                <h2 style="text-align: center; margin-bottom: 2rem; font-size: 2rem;">Apa Kata Pelanggan Kami</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
-                    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: var(--shadow);">
-                        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-                            <div style="width: 50px; height: 50px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-right: 1rem;">A</div>
-                            <div>
-                                <h4 style="margin: 0; color: var(--dark);">Ahmad Rizki</h4>
-                                <div style="color: var(--accent);">⭐⭐⭐⭐⭐</div>
-                            </div>
-                        </div>
-                        <p style="color: #666; font-style: italic;">"Pizza Margherita-nya enak banget! Pengiriman juga cepat, cuma 25 menit sudah sampai. Pasti order lagi!"</p>
-                    </div>
-                    
-                    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: var(--shadow);">
-                        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-                            <div style="width: 50px; height: 50px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-right: 1rem;">S</div>
-                            <div>
-                                <h4 style="margin: 0; color: var(--dark);">Sari Dewi</h4>
-                                <div style="color: var(--accent);">⭐⭐⭐⭐⭐</div>
-                            </div>
-                        </div>
-                        <p style="color: #666; font-style: italic;">"Burger Bacon-nya juara! Dagingnya empuk dan sausnya pas banget. Harga juga reasonable untuk kualitas segini."</p>
-                    </div>
-                    
-                    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: var(--shadow);">
-                        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-                            <div style="width: 50px; height: 50px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-right: 1rem;">B</div>
-                            <div>
-                                <h4 style="margin: 0; color: var(--dark);">Budi Santoso</h4>
-                                <div style="color: var(--accent);">⭐⭐⭐⭐⭐</div>
-                            </div>
-                        </div>
-                        <p style="color: #666; font-style: italic;">"Aplikasinya user-friendly, pesan mudah, dan makanannya selalu fresh. Recommended banget untuk yang suka praktis!"</p>
-                    </div>
                 </div>
 
                 <!-- CTA Section -->
                 <div style="background: var(--light); padding: 3rem 2rem; border-radius: 20px; text-align: center;">
                     <h2 style="color: var(--dark); margin-bottom: 1rem;">Siap Memesan?</h2>
-                    <p style="color: #666; margin-bottom: 2rem; font-size: 1.1rem;">Jangan tunggu lagi! Pesan makanan favorit Anda sekarang dan nikmati pengalaman kuliner terbaik.</p>
-                    <button class="btn" onclick="showPage('menu')" style="font-size: 1.1rem; padding: 1rem 2rem;">🍽️ Mulai Pesan Sekarang</button>
+                    <p style="color: #666; margin-bottom: 2rem; font-size: 1.1rem;">Jangan tunggu lagi! Pesan makanan favorit Anda sekarang dan nikmati pengalaman kuliner terbaik dengan promo menarik.</p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <button class="btn" onclick="navigateTo('menu')" style="font-size: 1.1rem; padding: 1rem 2rem;">🍽️ Mulai Pesan Sekarang</button>
+                        <button class="btn" onclick="navigateTo('promo')" style="background: var(--success); font-size: 1.1rem; padding: 1rem 2rem;">🎁 Lihat Promo</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -598,18 +569,31 @@
         <div id="menu" class="page">
             <div class="container">
                 <h1 style="text-align: center; margin-bottom: 1rem; font-size: 2.5rem;">Menu Kami</h1>
-                <p style="text-align: center; color: #666; margin-bottom: 3rem; font-size: 1.1rem;">Pilih dari 28+ menu lezat yang tersedia</p>
+                <p style="text-align: center; color: #666; margin-bottom: 3rem; font-size: 1.1rem;">Pilih dari 35+ menu lezat yang tersedia dengan bahan berkualitas premium</p>
                 
                 <!-- Category Filter -->
-                <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 3rem;">
-                    <button class="filter-btn active" onclick="filterMenu('all')" style="padding: 0.75rem 1.5rem; border: 2px solid var(--primary); background: var(--primary); color: white; border-radius: 25px; cursor: pointer; transition: all 0.3s ease; font-weight: 600;">Semua Menu</button>
-                    <button class="filter-btn" onclick="filterMenu('pizza')" style="padding: 0.75rem 1.5rem; border: 2px solid var(--primary); background: white; color: var(--primary); border-radius: 25px; cursor: pointer; transition: all 0.3s ease; font-weight: 600;">🍕 Pizza</button>
-                    <button class="filter-btn" onclick="filterMenu('burger')" style="padding: 0.75rem 1.5rem; border: 2px solid var(--primary); background: white; color: var(--primary); border-radius: 25px; cursor: pointer; transition: all 0.3s ease; font-weight: 600;">🍔 Burger</button>
-                    <button class="filter-btn" onclick="filterMenu('pasta')" style="padding: 0.75rem 1.5rem; border: 2px solid var(--primary); background: white; color: var(--primary); border-radius: 25px; cursor: pointer; transition: all 0.3s ease; font-weight: 600;">🍝 Pasta</button>
-                    <button class="filter-btn" onclick="filterMenu('salad')" style="padding: 0.75rem 1.5rem; border: 2px solid var(--primary); background: white; color: var(--primary); border-radius: 25px; cursor: pointer; transition: all 0.3s ease; font-weight: 600;">🥗 Salad</button>
-                    <button class="filter-btn" onclick="filterMenu('appetizer')" style="padding: 0.75rem 1.5rem; border: 2px solid var(--primary); background: white; color: var(--primary); border-radius: 25px; cursor: pointer; transition: all 0.3s ease; font-weight: 600;">🍗 Appetizer</button>
-                    <button class="filter-btn" onclick="filterMenu('dessert')" style="padding: 0.75rem 1.5rem; border: 2px solid var(--primary); background: white; color: var(--primary); border-radius: 25px; cursor: pointer; transition: all 0.3s ease; font-weight: 600;">🍰 Dessert</button>
-                    <button class="filter-btn" onclick="filterMenu('beverage')" style="padding: 0.75rem 1.5rem; border: 2px solid var(--primary); background: white; color: var(--primary); border-radius: 25px; cursor: pointer; transition: all 0.3s ease; font-weight: 600;">🥤 Minuman</button>
+                <div style="background: white; padding: 2rem; border-radius: 20px; box-shadow: var(--shadow); margin-bottom: 3rem;">
+                    <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--dark); font-size: 1.3rem;">🍽️ Pilih Kategori Menu</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 1rem; max-width: 900px; margin: 0 auto; justify-content: center; align-items: stretch;">
+                        <button class="filter-btn active" onclick="filterMenu('all')" style="padding: 0.75rem 1.5rem; border: 2px solid var(--primary); background: var(--primary); color: white; border-radius: 25px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; text-align: center; transform: scale(1); box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3); white-space: nowrap; display: flex; align-items: center; justify-content: center; min-height: 48px;">
+                            🍽️ Semua
+                        </button>
+                        <button class="filter-btn" onclick="filterMenu('pizza')" style="padding: 0.75rem 1.5rem; border: 2px solid var(--light); background: white; color: var(--dark); border-radius: 25px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; text-align: center; transform: scale(1); box-shadow: 0 2px 5px rgba(0,0,0,0.1); white-space: nowrap; display: flex; align-items: center; justify-content: center; min-height: 48px;">
+                            🍕 Pizza
+                        </button>
+                        <button class="filter-btn" onclick="filterMenu('burger')" style="padding: 0.75rem 1.5rem; border: 2px solid var(--light); background: white; color: var(--dark); border-radius: 25px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; text-align: center; transform: scale(1); box-shadow: 0 2px 5px rgba(0,0,0,0.1); white-space: nowrap; display: flex; align-items: center; justify-content: center; min-height: 48px;">
+                            🍔 Burger
+                        </button>
+                        <button class="filter-btn" onclick="filterMenu('pasta')" style="padding: 0.75rem 1.5rem; border: 2px solid var(--light); background: white; color: var(--dark); border-radius: 25px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; text-align: center; transform: scale(1); box-shadow: 0 2px 5px rgba(0,0,0,0.1); white-space: nowrap; display: flex; align-items: center; justify-content: center; min-height: 48px;">
+                            🍝 Pasta
+                        </button>
+                        <button class="filter-btn" onclick="filterMenu('salad')" style="padding: 0.75rem 1.5rem; border: 2px solid var(--light); background: white; color: var(--dark); border-radius: 25px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; text-align: center; transform: scale(1); box-shadow: 0 2px 5px rgba(0,0,0,0.1); white-space: nowrap; display: flex; align-items: center; justify-content: center; min-height: 48px;">
+                            🥗 Salad
+                        </button>
+                        <button class="filter-btn" onclick="filterMenu('dessert')" style="padding: 0.75rem 1.5rem; border: 2px solid var(--light); background: white; color: var(--dark); border-radius: 25px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; text-align: center; transform: scale(1); box-shadow: 0 2px 5px rgba(0,0,0,0.1); white-space: nowrap; display: flex; align-items: center; justify-content: center; min-height: 48px;">
+                            🍰 Dessert
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Search Bar -->
@@ -634,6 +618,221 @@
             </div>
         </div>
 
+        <!-- Promo Page -->
+        <div id="promo" class="page">
+            <div class="container">
+                <h1 style="text-align: center; margin-bottom: 1rem; font-size: 2.5rem;">Promo Spesial</h1>
+                <p style="text-align: center; color: #666; margin-bottom: 3rem; font-size: 1.1rem;">Dapatkan penawaran terbaik dan hemat lebih banyak!</p>
+                
+                <!-- Featured Promo -->
+                <div style="background: linear-gradient(135deg, var(--danger), var(--primary)); color: white; padding: 3rem 2rem; border-radius: 20px; text-align: center; margin-bottom: 3rem; position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: -50px; right: -50px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+                    <div style="position: absolute; bottom: -30px; left: -30px; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+                    <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">🎉 MEGA SALE 50% OFF!</h2>
+                    <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">Untuk 100 pelanggan pertama hari ini! Buruan sebelum kehabisan!</p>
+                    <div style="background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 10px; display: inline-block; margin-bottom: 2rem;">
+                        <div style="font-size: 1rem; opacity: 0.8;">Kode Promo:</div>
+                        <div style="font-size: 1.5rem; font-weight: bold; letter-spacing: 2px;">MEGA50</div>
+                    </div>
+                    <br>
+                    <button class="btn" onclick="navigateTo('menu')" style="background: white; color: var(--danger); font-weight: bold; font-size: 1.1rem;">🛒 Pesan Sekarang</button>
+                </div>
+
+                <!-- Promo Grid -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+                    <!-- Buy 1 Get 1 Promo -->
+                    <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: var(--shadow); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <div style="background: linear-gradient(45deg, var(--success), var(--accent)); padding: 2rem; text-align: center; color: white;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🍕</div>
+                            <h3 style="margin-bottom: 0.5rem;">Buy 1 Get 1 Pizza</h3>
+                            <p style="opacity: 0.9;">Setiap pembelian pizza, gratis 1 pizza</p>
+                        </div>
+                        <div style="padding: 1.5rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <span style="color: #666;">Berlaku hingga:</span>
+                                <span style="font-weight: bold; color: var(--danger);">31 Des 2024</span>
+                            </div>
+                            <div style="background: var(--light); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; text-align: center;">
+                                <div style="font-size: 0.9rem; color: #666;">Kode Promo:</div>
+                                <div style="font-size: 1.2rem; font-weight: bold; color: var(--primary);">BUY1GET1</div>
+                            </div>
+                            <button class="btn" onclick="navigateTo('menu')" style="width: 100%; padding: 0.75rem;">Gunakan Promo</button>
+                        </div>
+                    </div>
+
+                    <!-- Free Delivery Promo -->
+                    <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: var(--shadow); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <div style="background: linear-gradient(45deg, var(--primary), var(--danger)); padding: 2rem; text-align: center; color: white;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🚚</div>
+                            <h3 style="margin-bottom: 0.5rem;">Gratis Ongkir</h3>
+                            <p style="opacity: 0.9;">Untuk pembelian minimal Rp 100.000</p>
+                        </div>
+                        <div style="padding: 1.5rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <span style="color: #666;">Berlaku hingga:</span>
+                                <span style="font-weight: bold; color: var(--danger);">25 Des 2024</span>
+                            </div>
+                            <div style="background: var(--light); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; text-align: center;">
+                                <div style="font-size: 0.9rem; color: #666;">Kode Promo:</div>
+                                <div style="font-size: 1.2rem; font-weight: bold; color: var(--primary);">FREEONGKIR</div>
+                            </div>
+                            <button class="btn" onclick="navigateTo('menu')" style="width: 100%; padding: 0.75rem;">Gunakan Promo</button>
+                        </div>
+                    </div>
+
+                    <!-- Weekend Special -->
+                    <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: var(--shadow); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <div style="background: linear-gradient(45deg, var(--accent), var(--success)); padding: 2rem; text-align: center; color: white;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+                            <h3 style="margin-bottom: 0.5rem;">Weekend Special</h3>
+                            <p style="opacity: 0.9;">Diskon 30% setiap Sabtu-Minggu</p>
+                        </div>
+                        <div style="padding: 1.5rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <span style="color: #666;">Berlaku setiap:</span>
+                                <span style="font-weight: bold; color: var(--danger);">Sabtu-Minggu</span>
+                            </div>
+                            <div style="background: var(--light); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; text-align: center;">
+                                <div style="font-size: 0.9rem; color: #666;">Kode Promo:</div>
+                                <div style="font-size: 1.2rem; font-weight: bold; color: var(--primary);">WEEKEND30</div>
+                            </div>
+                            <button class="btn" onclick="navigateTo('menu')" style="width: 100%; padding: 0.75rem;">Gunakan Promo</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terms and Conditions -->
+                <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: var(--shadow);">
+                    <h3 style="color: var(--dark); margin-bottom: 1.5rem;">📋 Syarat dan Ketentuan Promo</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                        <div>
+                            <h4 style="color: var(--primary); margin-bottom: 1rem;">Ketentuan Umum:</h4>
+                            <ul style="color: #666; line-height: 1.8; padding-left: 1.5rem;">
+                                <li>Promo tidak dapat digabung dengan promo lain</li>
+                                <li>Berlaku untuk pembelian melalui aplikasi/website</li>
+                                <li>Promo dapat berubah sewaktu-waktu</li>
+                                <li>Stok terbatas untuk beberapa promo</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--primary); margin-bottom: 1rem;">Cara Menggunakan:</h4>
+                            <ul style="color: #666; line-height: 1.8; padding-left: 1.5rem;">
+                                <li>Masukkan kode promo saat checkout</li>
+                                <li>Pastikan memenuhi minimum pembelian</li>
+                                <li>Promo otomatis terpotong di total pembayaran</li>
+                                <li>Hubungi CS jika ada kendala</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blog Page -->
+        <div id="blog" class="page">
+            <div class="container">
+                <h1 style="text-align: center; margin-bottom: 1rem; font-size: 2.5rem;">Blog FoodOrder</h1>
+                <p style="text-align: center; color: #666; margin-bottom: 3rem; font-size: 1.1rem;">Tips kuliner, resep, dan berita terbaru dari dunia makanan</p>
+                
+                <!-- Featured Article -->
+                <div style="background: white; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-lg); margin-bottom: 3rem;">
+                    <div style="height: 300px; background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), linear-gradient(45deg, var(--primary), var(--accent)); background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; color: white; text-align: center;">
+                        <div>
+                            <div style="background: var(--primary); padding: 0.5rem 1rem; border-radius: 20px; display: inline-block; margin-bottom: 1rem; font-size: 0.9rem; font-weight: bold;">ARTIKEL UTAMA</div>
+                            <h2 style="font-size: 2.5rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Rahasia Pizza Italia Autentik</h2>
+                            <p style="font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto;">Pelajari teknik membuat pizza ala Italia yang sesungguhnya dari chef berpengalaman</p>
+                        </div>
+                    </div>
+                    <div style="padding: 2rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; color: #666; font-size: 0.9rem;">
+                            <span>👨‍🍳 Chef Marco</span>
+                            <span>•</span>
+                            <span>📅 12 Desember 2024</span>
+                            <span>•</span>
+                            <span>⏱️ 8 menit baca</span>
+                        </div>
+                        <p style="color: #666; line-height: 1.8; margin-bottom: 2rem;">
+                            Pizza bukan sekadar makanan, tetapi seni kuliner yang telah berkembang selama berabad-abad di Italia. 
+                            Dalam artikel ini, kami akan membagikan rahasia membuat pizza autentik yang telah diwariskan turun-temurun 
+                            oleh keluarga pizzaiolo di Napoli. Mulai dari pemilihan tepung yang tepat, teknik fermentasi adonan, 
+                            hingga cara memanggang yang sempurna...
+                        </p>
+                        <button class="btn" onclick="showBlogArticle('pizza-italia')" style="padding: 0.75rem 2rem;">Baca Selengkapnya</button>
+                    </div>
+                </div>
+
+                <!-- Blog Articles Grid -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+                    <!-- Recipe Article -->
+                    <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: var(--shadow); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <div style="height: 200px; background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), linear-gradient(45deg, var(--success), var(--primary)); background-size: cover; background-position: center; position: relative;">
+                            <div style="position: absolute; top: 15px; left: 15px; background: var(--success); color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem; font-weight: bold;">🍳 RESEP</div>
+                        </div>
+                        <div style="padding: 1.5rem;">
+                            <h3 style="color: var(--dark); margin-bottom: 0.5rem;">Burger Homemade yang Juicy</h3>
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; color: #666; font-size: 0.8rem;">
+                                <span>👨‍🍳 Chef Sarah</span>
+                                <span>📅 10 Des 2024</span>
+                                <span>⏱️ 6 menit</span>
+                            </div>
+                            <p style="color: #666; line-height: 1.6; margin-bottom: 1.5rem; font-size: 0.9rem;">
+                                Belajar membuat burger yang sempurna di rumah dengan daging sapi pilihan dan bumbu rahasia yang akan membuat keluarga ketagihan...
+                            </p>
+                            <button class="btn" onclick="showBlogArticle('burger-homemade')" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Baca Resep</button>
+                        </div>
+                    </div>
+
+                    <!-- Tips Article -->
+                    <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: var(--shadow); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <div style="height: 200px; background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), linear-gradient(45deg, var(--accent), var(--danger)); background-size: cover; background-position: center; position: relative;">
+                            <div style="position: absolute; top: 15px; left: 15px; background: var(--accent); color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem; font-weight: bold;">💡 TIPS</div>
+                        </div>
+                        <div style="padding: 1.5rem;">
+                            <h3 style="color: var(--dark); margin-bottom: 0.5rem;">5 Tips Menyimpan Makanan Agar Awet</h3>
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; color: #666; font-size: 0.8rem;">
+                                <span>👩‍🍳 Chef Lisa</span>
+                                <span>📅 8 Des 2024</span>
+                                <span>⏱️ 4 menit</span>
+                            </div>
+                            <p style="color: #666; line-height: 1.6; margin-bottom: 1.5rem; font-size: 0.9rem;">
+                                Pelajari cara menyimpan berbagai jenis makanan dengan benar agar tetap segar dan bergizi lebih lama. Tips praktis untuk dapur Anda...
+                            </p>
+                            <button class="btn" onclick="showBlogArticle('tips-menyimpan')" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Baca Tips</button>
+                        </div>
+                    </div>
+
+                    <!-- Health Article -->
+                    <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: var(--shadow); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <div style="height: 200px; background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), linear-gradient(45deg, var(--success), var(--accent)); background-size: cover; background-position: center; position: relative;">
+                            <div style="position: absolute; top: 15px; left: 15px; background: var(--success); color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem; font-weight: bold;">🥗 KESEHATAN</div>
+                        </div>
+                        <div style="padding: 1.5rem;">
+                            <h3 style="color: var(--dark); margin-bottom: 0.5rem;">Manfaat Salad untuk Diet Sehat</h3>
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; color: #666; font-size: 0.8rem;">
+                                <span>👩‍⚕️ Dr. Maya</span>
+                                <span>📅 6 Des 2024</span>
+                                <span>⏱️ 5 menit</span>
+                            </div>
+                            <p style="color: #666; line-height: 1.6; margin-bottom: 1.5rem; font-size: 0.9rem;">
+                                Mengapa salad menjadi pilihan terbaik untuk diet sehat? Pelajari kandungan nutrisi dan cara membuat salad yang lezat dan bergizi...
+                            </p>
+                            <button class="btn" onclick="showBlogArticle('manfaat-salad')" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Baca Artikel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Newsletter Subscription -->
+                <div style="background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; padding: 3rem 2rem; border-radius: 20px; text-align: center;">
+                    <h2 style="margin-bottom: 1rem;">📧 Berlangganan Newsletter</h2>
+                    <p style="margin-bottom: 2rem; opacity: 0.9; font-size: 1.1rem;">Dapatkan artikel terbaru, resep eksklusif, dan tips kuliner langsung di email Anda!</p>
+                    <div style="max-width: 400px; margin: 0 auto; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+                        <input type="email" placeholder="Masukkan email Anda..." style="flex: 1; min-width: 250px; padding: 1rem; border: none; border-radius: 25px; font-size: 1rem;">
+                        <button class="btn" onclick="subscribeNewsletter()" style="background: white; color: var(--primary); font-weight: bold; padding: 1rem 2rem;">Berlangganan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- About Page -->
         <div id="about" class="page">
             <div class="container">
@@ -647,6 +846,7 @@
                         FoodOrder didirikan pada tahun 2020 dengan misi sederhana: menghadirkan makanan berkualitas tinggi langsung ke pintu rumah Anda. 
                         Kami percaya bahwa setiap orang berhak menikmati makanan lezat tanpa harus meninggalkan kenyamanan rumah. 
                         Dengan tim chef berpengalaman dan sistem pengiriman yang efisien, kami telah melayani lebih dari 1000+ pelanggan puas di seluruh kota.
+                        Perjalanan kami dimulai dari sebuah dapur kecil dengan impian besar untuk mengubah cara orang menikmati makanan di era digital.
                     </p>
                 </div>
 
@@ -656,19 +856,19 @@
                     <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: var(--shadow); text-align: center;">
                         <div style="font-size: 3rem; margin-bottom: 1rem;">🌟</div>
                         <h3 style="color: var(--dark); margin-bottom: 1rem;">Kualitas Terjamin</h3>
-                        <p style="color: #666;">Kami hanya menggunakan bahan-bahan segar dan berkualitas tinggi untuk setiap hidangan yang kami sajikan.</p>
+                        <p style="color: #666;">Kami hanya menggunakan bahan-bahan segar dan berkualitas tinggi untuk setiap hidangan yang kami sajikan. Setiap supplier dipilih dengan ketat.</p>
                     </div>
                     
                     <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: var(--shadow); text-align: center;">
                         <div style="font-size: 3rem; margin-bottom: 1rem;">⚡</div>
                         <h3 style="color: var(--dark); margin-bottom: 1rem;">Pelayanan Cepat</h3>
-                        <p style="color: #666;">Komitmen kami adalah mengantarkan pesanan Anda dalam waktu maksimal 30 menit dengan kondisi masih hangat.</p>
+                        <p style="color: #666;">Komitmen kami adalah mengantarkan pesanan Anda dalam waktu maksimal 25 menit dengan kondisi masih hangat dan segar.</p>
                     </div>
                     
                     <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: var(--shadow); text-align: center;">
                         <div style="font-size: 3rem; margin-bottom: 1rem;">❤️</div>
                         <h3 style="color: var(--dark); margin-bottom: 1rem;">Kepuasan Pelanggan</h3>
-                        <p style="color: #666;">Kepuasan Anda adalah prioritas utama kami. Tim customer service siap membantu 24/7.</p>
+                        <p style="color: #666;">Kepuasan Anda adalah prioritas utama kami. Tim customer service siap membantu 24/7 untuk memastikan pengalaman terbaik.</p>
                     </div>
                 </div>
 
@@ -679,21 +879,28 @@
                         <div style="width: 80px; height: 80px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; font-weight: bold; margin: 0 auto 1rem;">JD</div>
                         <h4 style="color: var(--dark); margin-bottom: 0.5rem;">John Doe</h4>
                         <p style="color: var(--primary); font-weight: 600; margin-bottom: 0.5rem;">Head Chef</p>
-                        <p style="color: #666; font-size: 0.9rem;">15+ tahun pengalaman di industri kuliner internasional</p>
+                        <p style="color: #666; font-size: 0.9rem;">15+ tahun pengalaman di industri kuliner internasional. Spesialis masakan Italia dan Asia.</p>
                     </div>
                     
                     <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: var(--shadow); text-align: center;">
                         <div style="width: 80px; height: 80px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; font-weight: bold; margin: 0 auto 1rem;">AS</div>
                         <h4 style="color: var(--dark); margin-bottom: 0.5rem;">Anna Smith</h4>
                         <p style="color: var(--primary); font-weight: 600; margin-bottom: 0.5rem;">Operations Manager</p>
-                        <p style="color: #666; font-size: 0.9rem;">Memastikan setiap pesanan sampai tepat waktu dan berkualitas</p>
+                        <p style="color: #666; font-size: 0.9rem;">Memastikan setiap pesanan sampai tepat waktu dan berkualitas. Expert dalam supply chain management.</p>
                     </div>
                     
                     <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: var(--shadow); text-align: center;">
                         <div style="width: 80px; height: 80px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; font-weight: bold; margin: 0 auto 1rem;">MJ</div>
                         <h4 style="color: var(--dark); margin-bottom: 0.5rem;">Mike Johnson</h4>
                         <p style="color: var(--primary); font-weight: 600; margin-bottom: 0.5rem;">Customer Service Lead</p>
-                        <p style="color: #666; font-size: 0.9rem;">Siap membantu Anda 24/7 untuk pengalaman terbaik</p>
+                        <p style="color: #666; font-size: 0.9rem;">Siap membantu Anda 24/7 untuk pengalaman terbaik. Berpengalaman dalam customer relationship management.</p>
+                    </div>
+
+                    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: var(--shadow); text-align: center;">
+                        <div style="width: 80px; height: 80px; background: var(--danger); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; font-weight: bold; margin: 0 auto 1rem;">LW</div>
+                        <h4 style="color: var(--dark); margin-bottom: 0.5rem;">Lisa Wong</h4>
+                        <p style="color: var(--primary); font-weight: 600; margin-bottom: 0.5rem;">Marketing Director</p>
+                        <p style="color: #666; font-size: 0.9rem;">Mengembangkan strategi pemasaran dan program loyalitas pelanggan. Expert dalam digital marketing.</p>
                     </div>
                 </div>
 
@@ -759,10 +966,10 @@
                 <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: var(--shadow); margin-bottom: 3rem;">
                     <h3 style="margin-bottom: 1.5rem; color: var(--dark);">Aksi Cepat</h3>
                     <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                        <button class="btn" onclick="showPage('menu')" style="padding: 0.75rem 1.5rem;">🛒 Pesan Lagi</button>
+                        <button class="btn" onclick="navigateTo('menu')" style="padding: 0.75rem 1.5rem;">🛒 Pesan Lagi</button>
                         <button class="btn" onclick="clearOrderHistory()" style="background: var(--danger); padding: 0.75rem 1.5rem;">🗑️ Hapus Riwayat</button>
                         <button class="btn" onclick="exportOrders()" style="background: var(--success); padding: 0.75rem 1.5rem;">📊 Export Data</button>
-                        <button class="btn" onclick="showPage('about')" style="background: var(--accent); padding: 0.75rem 1.5rem;">📞 Hubungi CS</button>
+                        <button class="btn" onclick="navigateTo('about')" style="background: var(--accent); padding: 0.75rem 1.5rem;">📞 Hubungi CS</button>
                     </div>
                 </div>
 
@@ -832,6 +1039,16 @@
                                 <textarea id="customerAddress" name="customerAddress" required placeholder="Masukkan alamat lengkap termasuk kode pos"></textarea>
                             </div>
 
+                            <h3 style="margin: 2rem 0 1.5rem;">Kode Promo</h3>
+                            <div class="form-group">
+                                <label for="promoCode">Masukkan Kode Promo (Opsional)</label>
+                                <div style="display: flex; gap: 1rem;">
+                                    <input type="text" id="promoCode" name="promoCode" placeholder="Contoh: MEGA50, BUY1GET1, FREEONGKIR" style="flex: 1; text-transform: uppercase;">
+                                    <button type="button" class="btn" onclick="applyPromo()" style="padding: 0.75rem 1.5rem; white-space: nowrap;">Gunakan Promo</button>
+                                </div>
+                                <div id="promoMessage" style="margin-top: 0.5rem; font-size: 0.9rem;"></div>
+                            </div>
+
                             <h3 style="margin: 2rem 0 1.5rem;">Metode Pembayaran</h3>
                             <div class="payment-methods">
                                 <label class="payment-method">
@@ -864,9 +1081,19 @@
                                 <span>Subtotal:</span>
                                 <span id="checkoutSubtotal">Rp 0</span>
                             </div>
+                            <div class="summary-row" id="discountRow" style="display: none;">
+                                <span>Diskon Promo:</span>
+                                <span id="checkoutDiscount" style="color: var(--success);">-Rp 0</span>
+                            </div>
                             <div class="summary-row">
                                 <span>Ongkos Kirim:</span>
                                 <span id="checkoutShipping">Rp 10.000</span>
+                            </div>
+                            <div class="summary-row" id="appliedPromoRow" style="display: none; background: var(--light); padding: 0.5rem; border-radius: 5px; margin: 0.5rem 0;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span id="appliedPromoText" style="color: var(--success); font-weight: bold;"></span>
+                                    <button onclick="removePromo()" style="background: var(--danger); color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 3px; cursor: pointer; font-size: 0.8rem;">Hapus</button>
+                                </div>
                             </div>
                             <div class="summary-row total">
                                 <span>Total:</span>
@@ -887,77 +1114,315 @@
     <!-- Notification -->
     <div class="notification" id="notification"></div>
 
-    <script>
-        // Configuration - Replace these with your actual values
-        const CONFIG = {
-            APPS_SCRIPT_WEBHOOK_URL: '', // Leave empty for demo mode
-            NGIRIMWA_API_KEY: '', // Leave empty for demo mode
-            ADMIN_WHATSAPP: '082225544756' // Admin WhatsApp number
-        };
+    // Konfigurasi API
+const API_URL = 'YOUR_WEB_APP_URL'; // Ganti dengan URL Web App Anda
 
-        // Sample menu data - Expanded with more items
+// Fungsi untuk memanggil API
+async function callAPI(action, data = {}) {
+    try {
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                action: action,
+                ...data
+            })
+        });
+        
+        const result = await response.json();
+        console.log('API Response:', action, result);
+        return result;
+        
+    } catch (error) {
+        console.error('API Error:', error);
+        return { 
+            success: false, 
+            error: 'Koneksi gagal. Periksa koneksi internet Anda.' 
+        };
+    }
+}
+
+// Fungsi untuk memanggil API GET
+async function callAPIGet(action) {
+    try {
+        const response = await fetch(`${API_URL}?action=${action}`);
+        const result = await response.json();
+        console.log('API GET Response:', action, result);
+        return result;
+    } catch (error) {
+        console.error('API GET Error:', error);
+        return { 
+            success: false, 
+            error: 'Koneksi gagal' 
+        };
+    }
+}
+
+// Update fungsi handleCheckout
+async function handleCheckout(event) {
+    event.preventDefault();
+    
+    const formData = new FormData(event.target);
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const discount = calculateDiscount(subtotal);
+    const shipping = appliedPromo && appliedPromo.code === 'FREEONGKIR' ? 0 : 10000;
+    const total = subtotal - discount + shipping;
+
+    const orderData = {
+        customer: {
+            name: formData.get('customerName'),
+            phone: formData.get('customerPhone'),
+            address: formData.get('customerAddress')
+        },
+        items: [...cart],
+        paymentMethod: formData.get('paymentMethod'),
+        promoCode: appliedPromo ? appliedPromo.code : null,
+        subtotal: subtotal,
+        discount: discount,
+        shipping: shipping,
+        total: total
+    };
+    
+    // Validasi data
+    if (!orderData.customer.name || !orderData.customer.phone || !orderData.customer.address) {
+        showNotification('Harap lengkapi semua informasi pengiriman!', 'error');
+        return;
+    }
+    
+    if (orderData.items.length === 0) {
+        showNotification('Keranjang masih kosong!', 'error');
+        return;
+    }
+    
+    // Tampilkan loading
+    showLoading(true);
+    
+    try {
+        const result = await callAPI('createOrder', { orderData });
+        
+        if (result.success) {
+            // Clear cart and promo
+            cart = [];
+            appliedPromo = null;
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            updateCartDisplay();
+            
+            showNotification(`Pesanan berhasil! Order ID: ${result.orderId}`, 'success');
+            
+            setTimeout(() => {
+                navigateTo('dashboard');
+            }, 3000);
+        } else {
+            showNotification(result.error || 'Gagal membuat pesanan', 'error');
+        }
+    } catch (error) {
+        showNotification('Terjadi kesalahan saat memproses pesanan', 'error');
+    } finally {
+        showLoading(false);
+    }
+}
+
+// Update fungsi applyPromo
+async function applyPromo() {
+    const promoInput = document.getElementById('promoCode');
+    const promoMessage = document.getElementById('promoMessage');
+    const promoCode = promoInput.value.trim().toUpperCase();
+    
+    if (!promoCode) {
+        promoMessage.innerHTML = '<span style="color: var(--danger);">❌ Masukkan kode promo terlebih dahulu</span>';
+        return;
+    }
+    
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    
+    const result = await callAPI('applyPromo', {
+        promoCode: promoCode,
+        subtotal: subtotal
+    });
+    
+    if (result.success) {
+        appliedPromo = { 
+            code: promoCode, 
+            discount: result.discount,
+            type: result.type,
+            description: result.description
+        };
+        promoMessage.innerHTML = `<span style="color: var(--success);">✅ ${result.description} berhasil diterapkan!</span>`;
+        updateCheckoutDisplay();
+        showNotification('Kode promo berhasil diterapkan!', 'success');
+    } else {
+        promoMessage.innerHTML = `<span style="color: var(--danger);">❌ ${result.error}</span>`;
+    }
+}
+
+// Fungsi untuk load menu dari API
+async function loadMenuFromAPI() {
+    try {
+        const result = await callAPIGet('getMenu');
+        if (result.success && result.menu) {
+            return result.menu;
+        }
+    } catch (error) {
+        console.error('Failed to load menu from API:', error);
+    }
+    return null;
+}
+
+// Update fungsi subscribeNewsletter
+async function subscribeNewsletter() {
+    const emailInput = document.querySelector('input[type="email"]');
+    const email = emailInput.value.trim();
+    
+    if (!email) {
+        showNotification('Masukkan email Anda terlebih dahulu!', 'error');
+        return;
+    }
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        showNotification('Format email tidak valid!', 'error');
+        return;
+    }
+    
+    const result = await callAPI('subscribeNewsletter', { email: email });
+    
+    if (result.success) {
+        showNotification(result.message, 'success');
+        emailInput.value = '';
+    } else {
+        showNotification(result.error, 'error');
+    }
+}
+
+// Fungsi untuk mendapatkan riwayat pesanan
+async function loadOrderHistory(phone) {
+    try {
+        const result = await callAPI('getOrders', { customerPhone: phone });
+        if (result.success) {
+            return result.orders;
+        }
+    } catch (error) {
+        console.error('Failed to load order history:', error);
+    }
+    return [];
+}
+
+// Update fungsi showLoading
+function showLoading(show) {
+    const loading = document.getElementById('loading');
+    if (loading) {
+        if (show) {
+            loading.classList.add('show');
+        } else {
+            loading.classList.remove('show');
+        }
+    }
+}
+    <script>
+        // Sample menu data
         const menuData = [
             // Pizza Category
             { id: 1, name: 'Pizza Margherita', category: 'pizza', price: 85000, image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop', description: 'Pizza klasik dengan tomat segar, mozzarella, dan basil Italia', rating: 4.8, cookTime: '15-20 menit', isPopular: true },
             { id: 2, name: 'Pizza Pepperoni', category: 'pizza', price: 95000, image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&h=300&fit=crop', description: 'Pizza dengan pepperoni premium dan keju mozzarella', rating: 4.9, cookTime: '15-20 menit', isPopular: true },
             { id: 3, name: 'Pizza Hawaiian', category: 'pizza', price: 92000, image: 'https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=400&h=300&fit=crop', description: 'Pizza dengan ham, nanas, dan keju mozzarella', rating: 4.6, cookTime: '15-20 menit' },
-            { id: 4, name: 'Pizza Meat Lovers', category: 'pizza', price: 125000, image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=300&fit=crop', description: 'Pizza dengan pepperoni, sosis, ham, dan bacon', rating: 4.9, cookTime: '18-22 menit', isPopular: true },
-            { id: 5, name: 'Pizza Vegetarian', category: 'pizza', price: 88000, image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&h=300&fit=crop', description: 'Pizza dengan paprika, jamur, zaitun, dan tomat', rating: 4.5, cookTime: '15-20 menit' },
             
             // Burger Category
             { id: 6, name: 'Classic Burger', category: 'burger', price: 45000, image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop', description: 'Burger klasik dengan daging sapi premium dan keju cheddar', rating: 4.7, cookTime: '10-15 menit', isPopular: true },
             { id: 7, name: 'Cheese Burger', category: 'burger', price: 50000, image: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&h=300&fit=crop', description: 'Burger dengan keju cheddar ekstra yang meleleh sempurna', rating: 4.6, cookTime: '10-15 menit' },
             { id: 8, name: 'Bacon Burger', category: 'burger', price: 65000, image: 'https://images.unsplash.com/photo-1553979459-d2229ba7433a?w=400&h=300&fit=crop', description: 'Burger dengan bacon crispy dan saus BBQ', rating: 4.8, cookTime: '12-17 menit', isPopular: true },
-            { id: 9, name: 'Chicken Burger', category: 'burger', price: 48000, image: 'https://images.unsplash.com/photo-1606755962773-d324e2d53352?w=400&h=300&fit=crop', description: 'Burger ayam crispy dengan mayo dan selada segar', rating: 4.5, cookTime: '10-15 menit' },
-            { id: 10, name: 'Fish Burger', category: 'burger', price: 52000, image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&h=300&fit=crop', description: 'Burger ikan dengan saus tartar dan acar', rating: 4.4, cookTime: '12-17 menit' },
             
             // Pasta Category
             { id: 11, name: 'Spaghetti Carbonara', category: 'pasta', price: 55000, image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&h=300&fit=crop', description: 'Pasta dengan saus carbonara creamy dan bacon crispy', rating: 4.7, cookTime: '12-18 menit', isPopular: true },
             { id: 12, name: 'Spaghetti Bolognese', category: 'pasta', price: 58000, image: 'https://images.unsplash.com/photo-1551892374-ecf8754cf8b0?w=400&h=300&fit=crop', description: 'Pasta dengan saus daging sapi dan tomat Italia', rating: 4.8, cookTime: '15-20 menit', isPopular: true },
-            { id: 13, name: 'Fettuccine Alfredo', category: 'pasta', price: 62000, image: 'https://images.unsplash.com/photo-1621996346565-e3dbc353d2e5?w=400&h=300&fit=crop', description: 'Pasta dengan saus krim putih dan keju parmesan', rating: 4.6, cookTime: '12-18 menit' },
-            { id: 14, name: 'Penne Arrabbiata', category: 'pasta', price: 54000, image: 'https://images.unsplash.com/photo-1572441713132-51c75654db73?w=400&h=300&fit=crop', description: 'Pasta dengan saus tomat pedas dan herbs Italia', rating: 4.5, cookTime: '10-15 menit' },
             
             // Salad Category
             { id: 15, name: 'Caesar Salad', category: 'salad', price: 42000, image: 'https://images.unsplash.com/photo-1546793665-c74683f339c1?w=400&h=300&fit=crop', description: 'Salad segar dengan dressing Caesar dan crouton renyah', rating: 4.6, cookTime: '5-8 menit' },
-            { id: 16, name: 'Greek Salad', category: 'salad', price: 45000, image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&h=300&fit=crop', description: 'Salad dengan feta cheese, zaitun, dan dressing lemon', rating: 4.5, cookTime: '5-8 menit' },
             { id: 17, name: 'Chicken Salad', category: 'salad', price: 48000, image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=300&fit=crop', description: 'Salad dengan ayam grilled dan sayuran segar', rating: 4.7, cookTime: '8-12 menit', isPopular: true },
-            
-            // Appetizer Category
-            { id: 18, name: 'Chicken Wings', category: 'appetizer', price: 38000, image: 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=400&h=300&fit=crop', description: 'Sayap ayam crispy dengan saus BBQ atau buffalo', rating: 4.8, cookTime: '12-15 menit', isPopular: true },
-            { id: 19, name: 'Mozzarella Sticks', category: 'appetizer', price: 35000, image: 'https://images.unsplash.com/photo-1531749668029-2db88e4276c7?w=400&h=300&fit=crop', description: 'Keju mozzarella goreng dengan marinara sauce', rating: 4.6, cookTime: '8-10 menit' },
-            { id: 20, name: 'Onion Rings', category: 'appetizer', price: 32000, image: 'https://images.unsplash.com/photo-1639024471283-03518883512d?w=400&h=300&fit=crop', description: 'Bawang bombay goreng crispy dengan ranch sauce', rating: 4.4, cookTime: '8-10 menit' },
-            { id: 21, name: 'Garlic Bread', category: 'appetizer', price: 28000, image: 'https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?w=400&h=300&fit=crop', description: 'Roti bawang putih dengan herbs dan keju', rating: 4.5, cookTime: '5-8 menit' },
             
             // Dessert Category
             { id: 22, name: 'Chocolate Cake', category: 'dessert', price: 35000, image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=300&fit=crop', description: 'Kue coklat lembut dengan frosting coklat', rating: 4.9, cookTime: '2-3 menit', isPopular: true },
-            { id: 23, name: 'Cheesecake', category: 'dessert', price: 38000, image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=400&h=300&fit=crop', description: 'Cheesecake New York dengan berry sauce', rating: 4.8, cookTime: '2-3 menit', isPopular: true },
-            { id: 24, name: 'Ice Cream Sundae', category: 'dessert', price: 32000, image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&h=300&fit=crop', description: 'Es krim vanilla dengan topping dan saus coklat', rating: 4.7, cookTime: '2-3 menit' },
-            
-            // Beverage Category
-            { id: 25, name: 'Fresh Orange Juice', category: 'beverage', price: 18000, image: 'https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=400&h=300&fit=crop', description: 'Jus jeruk segar tanpa gula tambahan', rating: 4.6, cookTime: '2-3 menit' },
-            { id: 26, name: 'Iced Coffee', category: 'beverage', price: 22000, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&h=300&fit=crop', description: 'Kopi dingin dengan es dan susu', rating: 4.7, cookTime: '3-5 menit', isPopular: true },
-            { id: 27, name: 'Smoothie Bowl', category: 'beverage', price: 35000, image: 'https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?w=400&h=300&fit=crop', description: 'Smoothie buah dengan topping granola dan buah', rating: 4.8, cookTime: '5-8 menit' },
-            { id: 28, name: 'Lemonade', category: 'beverage', price: 16000, image: 'https://images.unsplash.com/photo-1523371683702-af24294d2cdc?w=400&h=300&fit=crop', description: 'Lemon segar dengan mint dan soda', rating: 4.5, cookTime: '2-3 menit' }
+            { id: 23, name: 'Cheesecake', category: 'dessert', price: 38000, image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=400&h=300&fit=crop', description: 'Cheesecake New York dengan berry sauce', rating: 4.8, cookTime: '2-3 menit', isPopular: true }
         ];
 
         // Global variables
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         let orders = JSON.parse(localStorage.getItem('orders')) || [];
+        let appliedPromo = null;
+
+        // Promo codes data
+        const promoCodes = {
+            'MEGA50': { discount: 50, type: 'percentage', minOrder: 0, description: 'Diskon 50% untuk semua menu' },
+            'BUY1GET1': { discount: 50, type: 'percentage', minOrder: 50000, description: 'Buy 1 Get 1 Pizza (Diskon 50%)' },
+            'FREEONGKIR': { discount: 10000, type: 'fixed', minOrder: 100000, description: 'Gratis ongkos kirim' },
+            'WEEKEND30': { discount: 30, type: 'percentage', minOrder: 75000, description: 'Diskon 30% weekend special' }
+        };
+
+        // Navigation function - FIXED VERSION
+        function navigateTo(pageId) {
+            console.log('Navigating to:', pageId);
+            
+            // Hide all pages
+            const allPages = document.querySelectorAll('.page');
+            allPages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show target page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                console.log('Page activated:', pageId);
+            } else {
+                console.error('Page not found:', pageId);
+                return;
+            }
+            
+            // Update navigation links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Find and activate the corresponding nav link
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                const onclick = link.getAttribute('onclick');
+                if (onclick && onclick.includes(`'${pageId}'`)) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Page-specific updates
+            setTimeout(() => {
+                if (pageId === 'menu') {
+                    renderMenu();
+                }
+                if (pageId === 'cart') {
+                    updateCartDisplay();
+                }
+                if (pageId === 'checkout') {
+                    updateCheckoutDisplay();
+                }
+                if (pageId === 'dashboard') {
+                    updateDashboard();
+                }
+            }, 100);
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
 
         // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
             console.log('App initializing...');
-            console.log('Initial cart:', cart);
             
-            // Force update cart display
-            setTimeout(() => {
-                updateCartCount();
-                renderMenu();
-                renderPopularItems();
-                updateCartDisplay();
-                updateDashboard();
-                console.log('App components updated');
-            }, 100);
+            updateCartCount();
+            renderMenu();
+            renderPopularItems();
+            updateCartDisplay();
+            updateDashboard();
             
             // Setup form submission
             const checkoutForm = document.getElementById('checkoutForm');
@@ -978,109 +1443,26 @@
             console.log('App initialized successfully');
         });
 
-        // Navigation functions
-        function showPage(pageId) {
-            console.log('Showing page:', pageId);
-            
-            // Hide all pages
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            
-            // Show selected page
-            const targetPage = document.getElementById(pageId);
-            if (targetPage) {
-                targetPage.classList.add('active');
-            }
-            
-            // Update navigation
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            
-            // Update active nav link
-            const activeLink = document.querySelector(`[onclick="showPage('${pageId}')"]`);
-            if (activeLink && activeLink.classList.contains('nav-link')) {
-                activeLink.classList.add('active');
-            }
-
-            // Update page-specific content with delay to ensure DOM is ready
-            setTimeout(() => {
-                if (pageId === 'cart') {
-                    console.log('Updating cart display for page navigation');
-                    updateCartDisplay();
-                } else if (pageId === 'checkout') {
-                    console.log('Updating checkout display for page navigation');
-                    updateCheckoutDisplay();
-                } else if (pageId === 'dashboard') {
-                    console.log('Updating dashboard for page navigation');
-                    updateDashboard();
-                } else if (pageId === 'home') {
-                    console.log('Updating home page for page navigation');
-                    renderPopularItems();
-                }
-            }, 50);
-        }
-
         // Menu functions
-        let currentFilter = 'all';
-        let currentSearchTerm = '';
-
-        function renderMenu(filteredData = null) {
+        function renderMenu() {
             const menuGrid = document.getElementById('menuGrid');
-            const noResults = document.getElementById('noResults');
+            if (!menuGrid) return;
             
-            if (!menuGrid) {
-                console.error('Menu grid not found');
-                return;
-            }
-            
-            let dataToRender = filteredData || menuData;
-            
-            // Apply current filter
-            if (currentFilter !== 'all') {
-                dataToRender = dataToRender.filter(item => item.category === currentFilter);
-            }
-            
-            // Apply current search
-            if (currentSearchTerm) {
-                dataToRender = dataToRender.filter(item => 
-                    item.name.toLowerCase().includes(currentSearchTerm.toLowerCase()) ||
-                    item.description.toLowerCase().includes(currentSearchTerm.toLowerCase())
-                );
-            }
-            
-            if (dataToRender.length === 0) {
-                menuGrid.style.display = 'none';
-                if (noResults) noResults.style.display = 'block';
-                return;
-            } else {
-                menuGrid.style.display = 'grid';
-                if (noResults) noResults.style.display = 'none';
-            }
-            
-            menuGrid.innerHTML = dataToRender.map(item => `
-                <div class="menu-item" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: var(--shadow); transition: all 0.3s ease; cursor: pointer; position: relative;" onclick="addToCart(${item.id})" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow)'">
-                    ${item.isPopular ? '<div style="position: absolute; top: 10px; right: 10px; background: var(--danger); color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem; font-weight: bold; z-index: 1;">🔥 Populer</div>' : ''}
-                    <img src="${item.image}" alt="${item.name}" style="width: 100%; height: 200px; object-fit: cover;" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDQwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjEwMCIgcj0iNDAiIGZpbGw9IiNFNUU3RUIiLz4KPHN2Zz4K'; this.alt='Gambar tidak tersedia';">
-                    <div style="padding: 1.5rem;">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
-                            <h3 style="color: var(--dark); flex: 1; margin-right: 1rem;">${item.name}</h3>
-                            <div style="display: flex; align-items: center; gap: 0.25rem; font-size: 0.9rem; color: var(--accent);">
-                                <span>⭐</span>
-                                <span style="font-weight: 600;">${item.rating}</span>
+            menuGrid.innerHTML = menuData.map(item => `
+                <div class="menu-item" data-category="${item.category}">
+                    <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: var(--shadow); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <div style="height: 200px; background: url('${item.image}') center/cover; position: relative;">
+                            ${item.isPopular ? '<div style="position: absolute; top: 10px; left: 10px; background: var(--danger); color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem; font-weight: bold;">🔥 POPULER</div>' : ''}
+                            <div style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem;">⭐ ${item.rating}</div>
+                        </div>
+                        <div style="padding: 1.5rem;">
+                            <h3 style="color: var(--dark); margin-bottom: 0.5rem;">${item.name}</h3>
+                            <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem; line-height: 1.4;">${item.description}</p>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <span class="price">Rp ${item.price.toLocaleString()}</span>
+                                <span style="color: #666; font-size: 0.8rem;">⏱️ ${item.cookTime}</span>
                             </div>
-                        </div>
-                        <p style="color: #666; margin-bottom: 0.75rem; font-size: 0.9rem; line-height: 1.4;">${item.description}</p>
-                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; font-size: 0.8rem; color: #888;">
-                            <span>🕒 ${item.cookTime}</span>
-                            <span style="text-transform: capitalize;">📂 ${getCategoryName(item.category)}</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span class="price">${formatCurrency(item.price)}</span>
-                            <button class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;" onclick="event.stopPropagation(); addToCart(${item.id})">
-                                Tambah 🛒
-                            </button>
+                            <button class="btn" onclick="addToCart(${item.id})" style="width: 100%; padding: 0.75rem;">🛒 Tambah ke Keranjang</button>
                         </div>
                     </div>
                 </div>
@@ -1091,252 +1473,145 @@
             const popularContainer = document.getElementById('popularItems');
             if (!popularContainer) return;
             
-            const popularItems = menuData.filter(item => item.isPopular).slice(0, 6);
+            const popularItems = menuData.filter(item => item.isPopular).slice(0, 3);
             
             popularContainer.innerHTML = popularItems.map(item => `
-                <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: var(--shadow); transition: all 0.3s ease; cursor: pointer;" onclick="addToCart(${item.id})" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
-                    <img src="${item.image}" alt="${item.name}" style="width: 100%; height: 150px; object-fit: cover;" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDQwMCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMTUwIiBmaWxsPSIjRjNGNEY2Ii8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9Ijc1IiByPSIzMCIgZmlsbD0iI0U1RTdFQiIvPgo8L3N2Zz4K'; this.alt='Gambar tidak tersedia';">
-                    <div style="padding: 1rem;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                            <h4 style="color: var(--dark); font-size: 1rem;">${item.name}</h4>
-                            <div style="display: flex; align-items: center; gap: 0.25rem; font-size: 0.8rem; color: var(--accent);">
-                                <span>⭐</span>
-                                <span>${item.rating}</span>
-                            </div>
+                <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: var(--shadow); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div style="height: 150px; background: url('${item.image}') center/cover; position: relative;">
+                        <div style="position: absolute; top: 10px; left: 10px; background: var(--danger); color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem; font-weight: bold;">🔥 POPULER</div>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <h4 style="color: var(--dark); margin-bottom: 0.5rem;">${item.name}</h4>
+                        <p style="color: #666; font-size: 0.8rem; margin-bottom: 1rem;">${item.description}</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <span class="price" style="font-size: 1rem;">Rp ${item.price.toLocaleString()}</span>
+                            <span style="color: var(--accent);">⭐ ${item.rating}</span>
                         </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="font-weight: bold; color: var(--primary);">${formatCurrency(item.price)}</span>
-                            <button class="btn" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;" onclick="event.stopPropagation(); addToCart(${item.id})">
-                                + Keranjang
-                            </button>
-                        </div>
+                        <button class="btn" onclick="addToCart(${item.id})" style="width: 100%; padding: 0.5rem; font-size: 0.9rem;">Pesan Sekarang</button>
                     </div>
                 </div>
             `).join('');
         }
 
         function filterMenu(category) {
-            currentFilter = category;
+            const menuItems = document.querySelectorAll('.menu-item');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const noResults = document.getElementById('noResults');
             
-            // Update filter buttons
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.style.background = 'white';
-                btn.style.color = 'var(--primary)';
+            // Update filter buttons with smooth animation
+            filterBtns.forEach(btn => {
                 btn.classList.remove('active');
+                // Reset to inactive style
+                btn.style.border = '2px solid var(--light)';
+                btn.style.background = 'white';
+                btn.style.color = 'var(--dark)';
+                btn.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
+                btn.style.transform = 'scale(1)';
             });
             
+            // Apply active style to clicked button with smooth animation
+            event.target.classList.add('active');
+            event.target.style.border = '2px solid var(--primary)';
             event.target.style.background = 'var(--primary)';
             event.target.style.color = 'white';
-            event.target.classList.add('active');
+            event.target.style.boxShadow = '0 2px 8px rgba(255, 107, 53, 0.3)';
+            event.target.style.transform = 'scale(1.05)';
             
-            renderMenu();
+            // Add hover effect for all buttons
+            filterBtns.forEach(btn => {
+                btn.onmouseenter = function() {
+                    if (!this.classList.contains('active')) {
+                        this.style.transform = 'scale(1.02)';
+                        this.style.boxShadow = '0 4px 8px rgba(0,0,0,0.15)';
+                    }
+                };
+                btn.onmouseleave = function() {
+                    if (!this.classList.contains('active')) {
+                        this.style.transform = 'scale(1)';
+                        this.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
+                    }
+                };
+            });
+            
+            let visibleCount = 0;
+            
+            menuItems.forEach(item => {
+                if (category === 'all' || item.dataset.category === category) {
+                    item.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            // Show/hide no results message
+            if (noResults) {
+                noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+            }
         }
 
-        function searchMenu(searchTerm) {
-            currentSearchTerm = searchTerm;
-            renderMenu();
+        function searchMenu(query) {
+            const menuItems = document.querySelectorAll('.menu-item');
+            const noResults = document.getElementById('noResults');
+            let visibleCount = 0;
+            
+            menuItems.forEach(item => {
+                const itemName = item.querySelector('h3').textContent.toLowerCase();
+                const itemDesc = item.querySelector('p').textContent.toLowerCase();
+                
+                if (itemName.includes(query.toLowerCase()) || itemDesc.includes(query.toLowerCase())) {
+                    item.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            if (noResults) {
+                noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+            }
         }
 
         function clearSearch() {
-            currentSearchTerm = '';
-            currentFilter = 'all';
-            
-            const searchInput = document.getElementById('searchInput');
-            if (searchInput) searchInput.value = '';
-            
-            // Reset filter buttons
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.style.background = 'white';
-                btn.style.color = 'var(--primary)';
-                btn.classList.remove('active');
-            });
-            
-            const allBtn = document.querySelector('.filter-btn');
-            if (allBtn) {
-                allBtn.style.background = 'var(--primary)';
-                allBtn.style.color = 'white';
-                allBtn.classList.add('active');
-            }
-            
-            renderMenu();
-        }
-
-        function getCategoryName(category) {
-            const categoryMap = {
-                'pizza': 'Pizza',
-                'burger': 'Burger', 
-                'pasta': 'Pasta',
-                'salad': 'Salad',
-                'appetizer': 'Appetizer',
-                'dessert': 'Dessert',
-                'beverage': 'Minuman'
-            };
-            return categoryMap[category] || category;
+            document.getElementById('searchInput').value = '';
+            filterMenu('all');
         }
 
         // Cart functions
-        function updateCartCount() {
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            const cartCountElement = document.getElementById('cartCount');
+        function addToCart(itemId) {
+            const item = menuData.find(i => i.id === itemId);
+            if (!item) return;
             
-            if (cartCountElement) {
-                cartCountElement.textContent = totalItems;
-                
-                if (totalItems === 0) {
-                    cartCountElement.style.display = 'none';
-                } else {
-                    cartCountElement.style.display = 'flex';
-                }
-            }
-        }
-
-        function addToCart(menuId) {
-            console.log('Adding to cart, menuId:', menuId);
+            const existingItem = cart.find(i => i.id === itemId);
             
-            const item = menuData.find(menu => menu.id === menuId);
-            if (!item) {
-                console.error('Menu item not found:', menuId);
-                return;
-            }
-            
-            console.log('Found menu item:', item);
-            
-            // Get fresh cart data
-            cart = JSON.parse(localStorage.getItem('cart')) || [];
-            
-            // Check if item already exists in cart
-            const existingItemIndex = cart.findIndex(cartItem => 
-                (cartItem.menuId === menuId) || (cartItem.id === menuId)
-            );
-            
-            if (existingItemIndex !== -1) {
-                cart[existingItemIndex].quantity += 1;
-                console.log('Updated existing item quantity');
+            if (existingItem) {
+                existingItem.quantity += 1;
             } else {
-                const cartItem = {
-                    id: Date.now() + Math.random(), // Ensure unique ID
-                    menuId: menuId,
-                    name: item.name,
-                    image: item.image,
-                    price: item.price,
-                    quantity: 1,
-                    variants: {}
-                };
-                
-                cart.push(cartItem);
-                console.log('Added new item to cart');
+                cart.push({
+                    ...item,
+                    quantity: 1
+                });
             }
             
-            console.log('Cart after update:', cart);
-            
-            // Save to localStorage
             localStorage.setItem('cart', JSON.stringify(cart));
-            
-            // Update UI
             updateCartCount();
-            
-            // If we're on cart page, update display
-            if (document.getElementById('cart').classList.contains('active')) {
-                updateCartDisplay();
-            }
-            
-            showNotification(`✅ ${item.name} ditambahkan ke keranjang!`, 'success');
+            showNotification('Item berhasil ditambahkan ke keranjang!', 'success');
         }
 
-        function updateCartDisplay() {
-            console.log('updateCartDisplay called');
-            
-            // Get fresh cart data from localStorage
-            cart = JSON.parse(localStorage.getItem('cart')) || [];
-            console.log('Fresh cart data:', cart);
-            
-            const cartItems = document.getElementById('cartItems');
-            
-            if (!cartItems) {
-                console.error('Cart items container not found');
-                return;
-            }
-            
-            if (cart.length === 0) {
-                console.log('Cart is empty, showing empty state');
-                cartItems.innerHTML = `
-                    <div class="empty-state">
-                        <div style="font-size: 4rem; margin-bottom: 1rem;">🛒</div>
-                        <h3>Keranjang Kosong</h3>
-                        <p>Belum ada item di keranjang Anda</p>
-                        <button class="btn" onclick="showPage('menu')">Mulai Belanja</button>
-                    </div>
-                `;
-            } else {
-                console.log('Rendering cart items:', cart.length);
-                try {
-                    cartItems.innerHTML = cart.map((item, index) => {
-                        console.log(`Rendering item ${index}:`, item);
-                        
-                        // Ensure item has required properties
-                        const itemId = item.id || item.menuId || Date.now() + index;
-                        const itemName = item.name || 'Unknown Item';
-                        const itemPrice = item.price || 0;
-                        const itemQuantity = item.quantity || 1;
-                        const itemImage = item.image || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjRjNGNEY2Ii8+CjxjaXJjbGUgY3g9IjQwIiBjeT0iNDAiIHI9IjE2IiBmaWxsPSIjRTVFN0VCIi8+Cjwvc3ZnPgo=';
-                        
-                        return `
-                            <div class="cart-item">
-                                <img src="${itemImage}" alt="${itemName}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjRjNGNEY2Ii8+CjxjaXJjbGUgY3g9IjQwIiBjeT0iNDAiIHI9IjE2IiBmaWxsPSIjRTVFN0VCIi8+Cjwvc3ZnPgo='; this.alt='Gambar tidak tersedia';">
-                                <div class="cart-item-info">
-                                    <h3>${itemName}</h3>
-                                    ${item.variants && Object.keys(item.variants).length > 0 ? `
-                                        <div class="cart-item-variants">
-                                            ${Object.entries(item.variants).map(([key, value]) => `${capitalizeFirst(key)}: ${value}`).join(', ')}
-                                        </div>
-                                    ` : ''}
-                                    <div class="price">${formatCurrency(itemPrice)}</div>
-                                </div>
-                                <div class="cart-item-controls">
-                                    <button class="quantity-btn" onclick="updateCartItemQuantity(${itemId}, -1)">-</button>
-                                    <span class="quantity-display">${itemQuantity}</span>
-                                    <button class="quantity-btn" onclick="updateCartItemQuantity(${itemId}, 1)">+</button>
-                                    <button class="remove-btn" onclick="removeFromCart(${itemId})">🗑️</button>
-                                </div>
-                            </div>
-                        `;
-                    }).join('');
-                    console.log('Cart items rendered successfully');
-                } catch (error) {
-                    console.error('Error rendering cart items:', error);
-                    cartItems.innerHTML = `
-                        <div class="empty-state">
-                            <div style="font-size: 4rem; margin-bottom: 1rem;">⚠️</div>
-                            <h3>Error Loading Cart</h3>
-                            <p>Terjadi kesalahan saat memuat keranjang</p>
-                            <button class="btn" onclick="clearCart()">Reset Keranjang</button>
-                        </div>
-                    `;
-                }
-            }
-            
-            updateCartSummary();
+        function removeFromCart(itemId) {
+            cart = cart.filter(item => item.id !== itemId);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            updateCartDisplay();
+            showNotification('Item berhasil dihapus dari keranjang!', 'success');
         }
 
-        function updateCartSummary() {
-            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const shipping = cart.length > 0 ? 10000 : 0;
-            const total = subtotal + shipping;
-            
-            const subtotalElement = document.getElementById('subtotal');
-            const shippingElement = document.getElementById('shipping');
-            const totalElement = document.getElementById('total');
-            
-            if (subtotalElement) subtotalElement.textContent = formatCurrency(subtotal);
-            if (shippingElement) shippingElement.textContent = formatCurrency(shipping);
-            if (totalElement) totalElement.textContent = formatCurrency(total);
-        }
-
-        function updateCartItemQuantity(itemId, change) {
-            const item = cart.find(cartItem => cartItem.id === itemId);
+        function updateQuantity(itemId, change) {
+            const item = cart.find(i => i.id === itemId);
             if (!item) return;
             
             item.quantity += change;
+            
             if (item.quantity <= 0) {
                 removeFromCart(itemId);
                 return;
@@ -1347,465 +1622,549 @@
             updateCartDisplay();
         }
 
-        function removeFromCart(itemId) {
-            cart = cart.filter(item => item.id !== itemId);
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartCount();
-            updateCartDisplay();
-            showNotification('Item berhasil dihapus dari keranjang', 'success');
+        function updateCartCount() {
+            const cartCount = document.getElementById('cartCount');
+            if (cartCount) {
+                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+                cartCount.textContent = totalItems;
+                cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+            }
         }
 
-        function proceedToCheckout() {
+        function updateCartDisplay() {
+            const cartItems = document.getElementById('cartItems');
+            const subtotalEl = document.getElementById('subtotal');
+            const totalEl = document.getElementById('total');
+            
+            if (!cartItems) return;
+            
             if (cart.length === 0) {
-                showNotification('Keranjang kosong! Tambahkan item terlebih dahulu.', 'error');
+                cartItems.innerHTML = `
+                    <div class="empty-state">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">🛒</div>
+                        <h3>Keranjang Kosong</h3>
+                        <p>Belum ada item di keranjang Anda</p>
+                        <button class="btn" onclick="navigateTo('menu')" style="margin-top: 1rem;">Mulai Belanja</button>
+                    </div>
+                `;
+                if (subtotalEl) subtotalEl.textContent = 'Rp 0';
+                if (totalEl) totalEl.textContent = 'Rp 10.000';
                 return;
             }
-            showPage('checkout');
-        }
-
-        // Checkout functions
-        function updateCheckoutDisplay() {
-            const checkoutItems = document.getElementById('checkoutItems');
             
-            if (checkoutItems) {
-                checkoutItems.innerHTML = cart.map(item => `
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
-                        <span>${item.name} x${item.quantity}</span>
-                        <span>${formatCurrency(item.price * item.quantity)}</span>
+            cartItems.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <img src="${item.image}" alt="${item.name}" onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';">
+                    <div class="cart-item-info">
+                        <h3>${item.name}</h3>
+                        <div class="price">Rp ${item.price.toLocaleString()}</div>
                     </div>
-                `).join('');
-            }
+                    <div class="cart-item-controls">
+                        <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                        <span class="quantity-display">${item.quantity}</span>
+                        <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                        <button class="remove-btn" onclick="removeFromCart(${item.id})">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
             
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             const shipping = 10000;
             const total = subtotal + shipping;
             
-            const checkoutSubtotalElement = document.getElementById('checkoutSubtotal');
-            const checkoutShippingElement = document.getElementById('checkoutShipping');
-            const checkoutTotalElement = document.getElementById('checkoutTotal');
-            
-            if (checkoutSubtotalElement) checkoutSubtotalElement.textContent = formatCurrency(subtotal);
-            if (checkoutShippingElement) checkoutShippingElement.textContent = formatCurrency(shipping);
-            if (checkoutTotalElement) checkoutTotalElement.textContent = formatCurrency(total);
+            if (subtotalEl) subtotalEl.textContent = `Rp ${subtotal.toLocaleString()}`;
+            if (totalEl) totalEl.textContent = `Rp ${total.toLocaleString()}`;
         }
 
-        async function handleCheckout(event) {
-            event.preventDefault();
-            
-            console.log('Checkout started');
-            
-            // Get fresh cart data
-            cart = JSON.parse(localStorage.getItem('cart')) || [];
-            console.log('Cart for checkout:', cart);
-            
+        function proceedToCheckout() {
             if (cart.length === 0) {
-                showNotification('Keranjang kosong! Tambahkan item terlebih dahulu.', 'error');
+                showNotification('Keranjang masih kosong!', 'error');
+                return;
+            }
+            navigateTo('checkout');
+        }
+
+        function updateCheckoutDisplay() {
+            const checkoutItems = document.getElementById('checkoutItems');
+            const checkoutSubtotal = document.getElementById('checkoutSubtotal');
+            const checkoutDiscount = document.getElementById('checkoutDiscount');
+            const checkoutShipping = document.getElementById('checkoutShipping');
+            const checkoutTotal = document.getElementById('checkoutTotal');
+            const discountRow = document.getElementById('discountRow');
+            const appliedPromoRow = document.getElementById('appliedPromoRow');
+            const appliedPromoText = document.getElementById('appliedPromoText');
+            
+            if (!checkoutItems) return;
+            
+            checkoutItems.innerHTML = cart.map(item => `
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--light);">
+                    <span>${item.name} x${item.quantity}</span>
+                    <span>Rp ${(item.price * item.quantity).toLocaleString()}</span>
+                </div>
+            `).join('');
+            
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const discount = calculateDiscount(subtotal);
+            const shipping = appliedPromo && appliedPromo.code === 'FREEONGKIR' ? 0 : 10000;
+            const total = subtotal - discount + shipping;
+            
+            if (checkoutSubtotal) checkoutSubtotal.textContent = `Rp ${subtotal.toLocaleString()}`;
+            
+            // Show/hide discount row
+            if (discount > 0 && discountRow && checkoutDiscount) {
+                discountRow.style.display = 'flex';
+                checkoutDiscount.textContent = `-Rp ${discount.toLocaleString()}`;
+            } else if (discountRow) {
+                discountRow.style.display = 'none';
+            }
+            
+            // Show/hide applied promo
+            if (appliedPromo && appliedPromoRow && appliedPromoText) {
+                appliedPromoRow.style.display = 'block';
+                appliedPromoText.textContent = `🎉 ${appliedPromo.code} - ${appliedPromo.description}`;
+            } else if (appliedPromoRow) {
+                appliedPromoRow.style.display = 'none';
+            }
+            
+            if (checkoutShipping) {
+                checkoutShipping.textContent = shipping === 0 ? 'GRATIS!' : `Rp ${shipping.toLocaleString()}`;
+                checkoutShipping.style.color = shipping === 0 ? 'var(--success)' : '';
+            }
+            
+            if (checkoutTotal) checkoutTotal.textContent = `Rp ${total.toLocaleString()}`;
+        }
+
+        // Promo functions
+        function applyPromo() {
+            const promoInput = document.getElementById('promoCode');
+            const promoMessage = document.getElementById('promoMessage');
+            const promoCode = promoInput.value.trim().toUpperCase();
+            
+            if (!promoCode) {
+                promoMessage.innerHTML = '<span style="color: var(--danger);">❌ Masukkan kode promo terlebih dahulu</span>';
                 return;
             }
             
+            const promo = promoCodes[promoCode];
+            if (!promo) {
+                promoMessage.innerHTML = '<span style="color: var(--danger);">❌ Kode promo tidak valid</span>';
+                return;
+            }
+            
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            if (subtotal < promo.minOrder) {
+                promoMessage.innerHTML = `<span style="color: var(--danger);">❌ Minimum pembelian Rp ${promo.minOrder.toLocaleString()} untuk promo ini</span>`;
+                return;
+            }
+            
+            appliedPromo = { code: promoCode, ...promo };
+            promoMessage.innerHTML = `<span style="color: var(--success);">✅ ${promo.description} berhasil diterapkan!</span>`;
+            
+            updateCheckoutDisplay();
+            showNotification('Kode promo berhasil diterapkan!', 'success');
+        }
+
+        function removePromo() {
+            appliedPromo = null;
+            document.getElementById('promoCode').value = '';
+            document.getElementById('promoMessage').innerHTML = '';
+            updateCheckoutDisplay();
+            showNotification('Kode promo dihapus', 'success');
+        }
+
+        function calculateDiscount(subtotal) {
+            if (!appliedPromo) return 0;
+            
+            if (appliedPromo.type === 'percentage') {
+                return Math.floor(subtotal * appliedPromo.discount / 100);
+            } else {
+                return appliedPromo.discount;
+            }
+        }
+
+        // Checkout functions
+        function handleCheckout(event) {
+            event.preventDefault();
+            
             const formData = new FormData(event.target);
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const discount = calculateDiscount(subtotal);
+            const shipping = appliedPromo && appliedPromo.code === 'FREEONGKIR' ? 0 : 10000;
+            const total = subtotal - discount + shipping;
+
             const orderData = {
-                order_id: generateOrderId(),
-                timestamp: new Date().toISOString(),
-                customer_name: formData.get('customerName'),
-                customer_phone: formData.get('customerPhone'),
-                customer_address: formData.get('customerAddress'),
-                payment_method: formData.get('paymentMethod'),
-                items: cart.map(item => ({
-                    id: item.menuId || item.id,
-                    name: item.name,
-                    variants: item.variants || {},
-                    quantity: item.quantity,
-                    price: item.price,
-                    total: item.price * item.quantity
-                })),
-                subtotal: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
-                shipping: 10000,
-                total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) + 10000,
-                status: 'pending'
+                id: Date.now(),
+                items: [...cart],
+                customer: {
+                    name: formData.get('customerName'),
+                    phone: formData.get('customerPhone'),
+                    address: formData.get('customerAddress')
+                },
+                payment: formData.get('paymentMethod'),
+                promo: appliedPromo ? { code: appliedPromo.code, discount: discount } : null,
+                subtotal: subtotal,
+                discount: discount,
+                shipping: shipping,
+                total: total,
+                status: 'pending',
+                date: new Date().toISOString()
             };
             
-            console.log('Order data prepared:', orderData);
+            // Add to orders
+            orders.push(orderData);
+            localStorage.setItem('orders', JSON.stringify(orders));
             
-            showLoading(true);
-            
-            try {
-                // Always save order locally first
-                const existingOrders = JSON.parse(localStorage.getItem('orders')) || [];
-                existingOrders.push(orderData);
-                localStorage.setItem('orders', JSON.stringify(existingOrders));
-                console.log('Order saved locally');
-                
-                // Try to send to Google Apps Script if configured
-                if (CONFIG.APPS_SCRIPT_WEBHOOK_URL && CONFIG.APPS_SCRIPT_WEBHOOK_URL.trim() !== '') {
-                    try {
-                        console.log('Sending to Apps Script...');
-                        const response = await fetch(CONFIG.APPS_SCRIPT_WEBHOOK_URL, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify(orderData)
-                        });
-                        
-                        if (response.ok) {
-                            const result = await response.json();
-                            console.log('Apps Script response:', result);
-                        }
-                    } catch (apiError) {
-                        console.log('Apps Script not available, using fallback:', apiError);
-                    }
-                }
-                
-                // Clear cart
-                cart = [];
-                localStorage.setItem('cart', JSON.stringify(cart));
-                updateCartCount();
-                console.log('Cart cleared');
-                
-                // Hide loading first
-                showLoading(false);
-                
-                // Show success notification
-                showNotification(`🎉 Pesanan berhasil dibuat!\nOrder ID: ${orderData.order_id}\nTotal: ${formatCurrency(orderData.total)}`, 'success');
-                
-                // Reset form
-                event.target.reset();
-                document.querySelectorAll('.payment-method').forEach(method => {
-                    method.classList.remove('selected');
-                });
-                
-                // Open WhatsApp after a short delay
-                setTimeout(() => {
-                    openWhatsAppFallback(orderData);
-                    showPage('home');
-                }, 2000);
-                
-            } catch (error) {
-                console.error('Checkout error:', error);
-                
-                // Hide loading
-                showLoading(false);
-                
-                // Still process the order locally
-                const existingOrders = JSON.parse(localStorage.getItem('orders')) || [];
-                if (!existingOrders.find(o => o.order_id === orderData.order_id)) {
-                    existingOrders.push(orderData);
-                    localStorage.setItem('orders', JSON.stringify(existingOrders));
-                }
-                
-                // Clear cart
-                cart = [];
-                localStorage.setItem('cart', JSON.stringify(cart));
-                updateCartCount();
-                
-                // Show success notification anyway
-                showNotification(`✅ Pesanan berhasil dibuat!\nOrder ID: ${orderData.order_id}`, 'success');
-                
-                // Reset form
-                event.target.reset();
-                document.querySelectorAll('.payment-method').forEach(method => {
-                    method.classList.remove('selected');
-                });
-                
-                // Open WhatsApp as fallback
-                setTimeout(() => {
-                    openWhatsAppFallback(orderData);
-                    showPage('home');
-                }, 2000);
-            }
-        }
-
-        function openWhatsAppFallback(orderData) {
-            const message = `🍕 PESANAN BARU 🍕
-
-Order ID: ${orderData.order_id}
-Nama: ${orderData.customer_name}
-Telepon: ${orderData.customer_phone}
-Alamat: ${orderData.customer_address}
-
-DETAIL PESANAN:
-${orderData.items.map(item => `• ${item.name} (${item.quantity}x) - ${formatCurrency(item.total)}`).join('\n')}
-
-Subtotal: ${formatCurrency(orderData.subtotal)}
-Ongkir: ${formatCurrency(orderData.shipping)}
-TOTAL: ${formatCurrency(orderData.total)}
-
-Pembayaran: ${getPaymentMethodText(orderData.payment_method)}
-Waktu: ${new Date(orderData.timestamp).toLocaleString('id-ID')}`;
-            
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappUrl = `https://wa.me/62${CONFIG.ADMIN_WHATSAPP.replace(/^0/, '')}?text=${encodedMessage}`;
-            
-            window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-        }
-
-        // Utility functions
-        function formatCurrency(amount) {
-            return new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-                minimumFractionDigits: 0
-            }).format(amount);
-        }
-
-        function capitalizeFirst(str) {
-            return str.charAt(0).toUpperCase() + str.slice(1);
-        }
-
-        function generateOrderId() {
-            const timestamp = Date.now().toString();
-            const random = Math.random().toString(36).substr(2, 5).toUpperCase();
-            return `ORD-${timestamp.slice(-6)}-${random}`;
-        }
-
-        function getPaymentMethodText(method) {
-            const methodMap = {
-                'cod': 'Cash on Delivery (COD)',
-                'transfer': 'Transfer Bank',
-                'ewallet': 'E-Wallet (OVO/GoPay/DANA)'
-            };
-            
-            return methodMap[method] || method;
-        }
-
-        function showLoading(show) {
-            const loading = document.getElementById('loading');
-            if (loading) {
-                if (show) {
-                    loading.classList.add('show');
-                } else {
-                    loading.classList.remove('show');
-                }
-            }
-        }
-
-        function showNotification(message, type = 'success') {
-            const notification = document.getElementById('notification');
-            if (notification) {
-                // Handle multiline messages
-                if (message.includes('\n')) {
-                    notification.innerHTML = message.replace(/\n/g, '<br>');
-                } else {
-                    notification.textContent = message;
-                }
-                notification.className = `notification ${type}`;
-                notification.classList.add('show');
-                
-                setTimeout(() => {
-                    notification.classList.remove('show');
-                }, 5000);
-            }
-        }
-
-        function clearCart() {
+            // Clear cart and promo
             cart = [];
+            appliedPromo = null;
             localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Show success and redirect
+            showNotification('Pesanan berhasil dibuat!', 'success');
             updateCartCount();
-            updateCartDisplay();
-            showNotification('Keranjang berhasil dikosongkan', 'success');
+            
+            setTimeout(() => {
+                navigateTo('dashboard');
+            }, 2000);
         }
 
         // Dashboard functions
         function updateDashboard() {
-            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+            const totalOrdersEl = document.getElementById('totalOrders');
+            const completedOrdersEl = document.getElementById('completedOrders');
+            const pendingOrdersEl = document.getElementById('pendingOrders');
+            const totalSpentEl = document.getElementById('totalSpent');
+            const orderHistoryEl = document.getElementById('orderHistory');
             
-            // Update stats
-            const totalOrdersElement = document.getElementById('totalOrders');
-            const completedOrdersElement = document.getElementById('completedOrders');
-            const pendingOrdersElement = document.getElementById('pendingOrders');
-            const totalSpentElement = document.getElementById('totalSpent');
+            if (!totalOrdersEl) return;
             
-            if (totalOrdersElement) totalOrdersElement.textContent = orders.length;
-            
+            const totalOrders = orders.length;
             const completedOrders = orders.filter(order => order.status === 'completed').length;
             const pendingOrders = orders.filter(order => order.status === 'pending').length;
             const totalSpent = orders.reduce((sum, order) => sum + order.total, 0);
             
-            if (completedOrdersElement) completedOrdersElement.textContent = completedOrders;
-            if (pendingOrdersElement) pendingOrdersElement.textContent = pendingOrders;
-            if (totalSpentElement) totalSpentElement.textContent = formatCurrency(totalSpent);
-            
-            // Update order history
-            updateOrderHistory();
-        }
-
-        function updateOrderHistory() {
-            const orderHistoryContainer = document.getElementById('orderHistory');
-            if (!orderHistoryContainer) return;
-            
-            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+            totalOrdersEl.textContent = totalOrders;
+            completedOrdersEl.textContent = completedOrders;
+            pendingOrdersEl.textContent = pendingOrders;
+            totalSpentEl.textContent = `Rp ${totalSpent.toLocaleString()}`;
             
             if (orders.length === 0) {
-                orderHistoryContainer.innerHTML = `
-                    <div style="text-align: center; padding: 3rem 2rem; color: #666;">
+                orderHistoryEl.innerHTML = `
+                    <div class="empty-state">
                         <div style="font-size: 4rem; margin-bottom: 1rem;">📋</div>
-                        <h3 style="margin-bottom: 1rem; color: var(--dark);">Belum Ada Pesanan</h3>
-                        <p>Anda belum pernah melakukan pesanan. Mulai pesan sekarang!</p>
-                        <button class="btn" onclick="showPage('menu')" style="margin-top: 1rem;">🛒 Mulai Pesan</button>
+                        <h3>Belum Ada Pesanan</h3>
+                        <p>Anda belum pernah melakukan pesanan</p>
+                        <button class="btn" onclick="navigateTo('menu')" style="margin-top: 1rem;">Mulai Pesan</button>
                     </div>
                 `;
                 return;
             }
             
-            // Sort orders by timestamp (newest first)
-            const sortedOrders = orders.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-            
-            orderHistoryContainer.innerHTML = sortedOrders.map(order => `
-                <div style="border: 2px solid var(--light); border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; transition: all 0.3s ease;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--light)'">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
-                        <div>
-                            <h4 style="color: var(--dark); margin-bottom: 0.5rem;">Order #${order.order_id}</h4>
-                            <p style="color: #666; font-size: 0.9rem;">${new Date(order.timestamp).toLocaleString('id-ID')}</p>
-                        </div>
-                        <div style="text-align: right;">
-                            <div style="background: ${order.status === 'completed' ? 'var(--success)' : 'var(--accent)'}; color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem; font-weight: bold; margin-bottom: 0.5rem;">
-                                ${order.status === 'completed' ? '✅ Selesai' : '⏳ Pending'}
-                            </div>
-                            <div style="font-weight: bold; color: var(--primary);">${formatCurrency(order.total)}</div>
-                        </div>
+            orderHistoryEl.innerHTML = orders.slice(-5).reverse().map(order => `
+                <div style="background: var(--light); padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h4 style="margin: 0;">Pesanan #${order.id}</h4>
+                        <span style="background: ${order.status === 'completed' ? 'var(--success)' : 'var(--accent)'}; color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem;">
+                            ${order.status === 'completed' ? '✅ Selesai' : '⏳ Pending'}
+                        </span>
                     </div>
-                    
-                    <div style="margin-bottom: 1rem;">
-                        <h5 style="color: var(--dark); margin-bottom: 0.5rem;">Items:</h5>
-                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                            ${order.items.map(item => `
-                                <span style="background: var(--light); padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem; color: var(--dark);">
-                                    ${item.name} (${item.quantity}x)
-                                </span>
-                            `).join('')}
-                        </div>
+                    <div style="color: #666; margin-bottom: 0.5rem;">
+                        📅 ${new Date(order.date).toLocaleDateString('id-ID')}
                     </div>
-                    
-                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                        <button class="btn" onclick="reorderItems('${order.order_id}')" style="padding: 0.5rem 1rem; font-size: 0.8rem; background: var(--success);">🔄 Pesan Lagi</button>
-                        <button class="btn" onclick="viewOrderDetails('${order.order_id}')" style="padding: 0.5rem 1rem; font-size: 0.8rem; background: var(--accent);">👁️ Detail</button>
-                        ${order.status === 'pending' ? `<button class="btn" onclick="markAsCompleted('${order.order_id}')" style="padding: 0.5rem 1rem; font-size: 0.8rem; background: var(--primary);">✅ Tandai Selesai</button>` : ''}
+                    <div style="color: #666; margin-bottom: 1rem;">
+                        🍽️ ${order.items.length} item - Total: Rp ${order.total.toLocaleString()}
+                    </div>
+                    <div style="font-size: 0.9rem; color: #666;">
+                        ${order.items.map(item => `${item.name} x${item.quantity}`).join(', ')}
                     </div>
                 </div>
             `).join('');
         }
 
         function clearOrderHistory() {
-            if (confirm('Apakah Anda yakin ingin menghapus semua riwayat pesanan? Tindakan ini tidak dapat dibatalkan.')) {
-                localStorage.setItem('orders', JSON.stringify([]));
+            if (confirm('Yakin ingin menghapus semua riwayat pesanan?')) {
+                orders = [];
+                localStorage.setItem('orders', JSON.stringify(orders));
                 updateDashboard();
-                showNotification('Riwayat pesanan berhasil dihapus', 'success');
+                showNotification('Riwayat pesanan berhasil dihapus!', 'success');
             }
         }
 
         function exportOrders() {
-            const orders = JSON.parse(localStorage.getItem('orders')) || [];
-            
             if (orders.length === 0) {
-                showNotification('Tidak ada data pesanan untuk diekspor', 'error');
+                showNotification('Tidak ada data untuk diekspor!', 'error');
                 return;
             }
             
-            // Create CSV content
-            let csvContent = "Order ID,Tanggal,Nama,Telepon,Alamat,Items,Total,Status\n";
+            const csvContent = "data:text/csv;charset=utf-8," 
+                + "ID,Tanggal,Items,Total,Status\n"
+                + orders.map(order => 
+                    `${order.id},${new Date(order.date).toLocaleDateString('id-ID')},"${order.items.map(item => `${item.name} x${item.quantity}`).join('; ')}",${order.total},${order.status}`
+                ).join("\n");
             
-            orders.forEach(order => {
-                const itemsText = order.items.map(item => `${item.name} (${item.quantity}x)`).join('; ');
-                const row = [
-                    order.order_id,
-                    new Date(order.timestamp).toLocaleString('id-ID'),
-                    order.customer_name,
-                    order.customer_phone,
-                    order.customer_address.replace(/,/g, ';'),
-                    itemsText,
-                    order.total,
-                    order.status
-                ].join(',');
-                csvContent += row + "\n";
-            });
-            
-            // Create and download file
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-            link.setAttribute('href', url);
-            link.setAttribute('download', `foodorder_history_${new Date().toISOString().split('T')[0]}.csv`);
-            link.style.visibility = 'hidden';
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "riwayat_pesanan.csv");
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             
-            showNotification('Data pesanan berhasil diekspor', 'success');
+            showNotification('Data berhasil diekspor!', 'success');
         }
 
-        function reorderItems(orderId) {
-            const orders = JSON.parse(localStorage.getItem('orders')) || [];
-            const order = orders.find(o => o.order_id === orderId);
-            
-            if (!order) {
-                showNotification('Pesanan tidak ditemukan', 'error');
-                return;
-            }
-            
-            // Add items to cart
-            order.items.forEach(orderItem => {
-                const menuItem = menuData.find(m => m.id === orderItem.id);
-                if (menuItem) {
-                    for (let i = 0; i < orderItem.quantity; i++) {
-                        addToCart(menuItem.id);
-                    }
+        // Blog functions
+        function showBlogArticle(articleId) {
+            const articles = {
+                'pizza-italia': {
+                    title: 'Rahasia Pizza Italia Autentik',
+                    author: 'Chef Marco',
+                    date: '12 Desember 2024',
+                    readTime: '8 menit baca',
+                    content: `
+                        <p>Pizza bukan sekadar makanan, tetapi seni kuliner yang telah berkembang selama berabad-abad di Italia. Dalam artikel ini, kami akan membagikan rahasia membuat pizza autentik yang telah diwariskan turun-temurun oleh keluarga pizzaiolo di Napoli.</p>
+                        
+                        <h3>1. Pemilihan Tepung yang Tepat</h3>
+                        <p>Gunakan tepung tipo 00 yang memiliki kandungan protein sedang (11-12%). Tepung ini memberikan tekstur yang sempurna - renyah di luar namun lembut di dalam.</p>
+                        
+                        <h3>2. Teknik Fermentasi Adonan</h3>
+                        <p>Fermentasi minimal 24 jam di suhu dingin akan menghasilkan adonan yang mudah dibentuk dan memiliki rasa yang kompleks. Jangan terburu-buru dalam proses ini.</p>
+                        
+                        <h3>3. Saus Tomat Sederhana</h3>
+                        <p>Gunakan tomat San Marzano yang dihancurkan dengan tangan, tambahkan sedikit garam laut dan basil segar. Jangan memasak saus - biarkan panas oven yang melakukan pekerjaannya.</p>
+                        
+                        <h3>4. Mozzarella Berkualitas</h3>
+                        <p>Pilih mozzarella di bufala atau fior di latte yang segar. Tiriskan dengan baik untuk menghindari pizza yang terlalu basah.</p>
+                        
+                        <h3>5. Teknik Memanggang</h3>
+                        <p>Suhu tinggi (450-500°C) adalah kunci. Jika tidak memiliki oven pizza, gunakan batu pizza dan panaskan oven pada suhu maksimal selama minimal 1 jam.</p>
+                        
+                        <p><strong>Tips Bonus:</strong> Pizza terbaik dimakan langsung setelah keluar dari oven. Jangan menunggu terlalu lama!</p>
+                    `
+                },
+                'burger-homemade': {
+                    title: 'Burger Homemade yang Juicy',
+                    author: 'Chef Sarah',
+                    date: '10 Desember 2024',
+                    readTime: '6 menit baca',
+                    content: `
+                        <p>Membuat burger yang sempurna di rumah membutuhkan teknik yang tepat dan bahan berkualitas. Berikut resep lengkap untuk burger yang akan membuat keluarga ketagihan.</p>
+                        
+                        <h3>Bahan-bahan:</h3>
+                        <ul>
+                            <li>500g daging sapi giling (80/20 fat ratio)</li>
+                            <li>4 roti burger brioche</li>
+                            <li>4 lembar keju cheddar</li>
+                            <li>1 bawang bombay, iris tipis</li>
+                            <li>4 lembar selada</li>
+                            <li>2 tomat, iris</li>
+                            <li>Mayonnaise dan saus tomat</li>
+                        </ul>
+                        
+                        <h3>Bumbu Patty:</h3>
+                        <ul>
+                            <li>1 sdt garam</li>
+                            <li>1/2 sdt lada hitam</li>
+                            <li>1 sdt bawang putih bubuk</li>
+                            <li>1 sdt paprika bubuk</li>
+                        </ul>
+                        
+                        <h3>Cara Membuat:</h3>
+                        <ol>
+                            <li>Campurkan daging dengan bumbu, bentuk 4 patty. Jangan terlalu padat!</li>
+                            <li>Buat cekungan kecil di tengah patty untuk mencegah mengembang</li>
+                            <li>Panaskan wajan dengan api sedang-tinggi</li>
+                            <li>Masak patty 3-4 menit per sisi untuk medium</li>
+                            <li>Tambahkan keju di menit terakhir</li>
+                            <li>Panggang roti sebentar hingga kecoklatan</li>
+                            <li>Susun: roti bawah, saus, selada, patty, tomat, bawang, roti atas</li>
+                        </ol>
+                        
+                        <p><strong>Rahasia:</strong> Jangan menekan patty saat memasak - ini akan mengeluarkan jus daging!</p>
+                    `
+                },
+                'tips-menyimpan': {
+                    title: '5 Tips Menyimpan Makanan Agar Awet',
+                    author: 'Chef Lisa',
+                    date: '8 Desember 2024',
+                    readTime: '4 menit baca',
+                    content: `
+                        <p>Menyimpan makanan dengan benar tidak hanya menghemat uang, tetapi juga menjaga kualitas dan keamanan pangan. Berikut 5 tips praktis untuk dapur Anda.</p>
+                        
+                        <h3>1. Pahami Zona Suhu Kulkas</h3>
+                        <p><strong>Rak atas (2-4°C):</strong> Sisa makanan, minuman, produk siap saji</p>
+                        <p><strong>Rak tengah (3-5°C):</strong> Telur, produk susu, daging matang</p>
+                        <p><strong>Rak bawah (0-2°C):</strong> Daging mentah, ikan, unggas</p>
+                        <p><strong>Laci sayur:</strong> Buah dan sayuran (kelembaban tinggi)</p>
+                        
+                        <h3>2. Gunakan Wadah Kedap Udara</h3>
+                        <p>Investasi dalam wadah kaca atau plastik berkualitas. Udara adalah musuh utama kesegaran makanan. Pastikan wadah benar-benar tertutup rapat.</p>
+                        
+                        <h3>3. Teknik FIFO (First In, First Out)</h3>
+                        <p>Gunakan makanan yang lebih lama disimpan terlebih dahulu. Tempel label tanggal pada wadah untuk memudahkan tracking.</p>
+                        
+                        <h3>4. Pisahkan Buah dan Sayur</h3>
+                        <p>Beberapa buah menghasilkan gas etilen yang mempercepat pematangan. Simpan pisang, apel, dan tomat terpisah dari sayuran hijau.</p>
+                        
+                        <h3>5. Bekukan dengan Cerdas</h3>
+                        <p>Potong daging dalam porsi sekali makan sebelum dibekukan. Gunakan freezer bag dan keluarkan udara sebanyak mungkin. Label dengan tanggal dan jenis makanan.</p>
+                        
+                        <p><strong>Bonus Tip:</strong> Bersihkan kulkas secara rutin dan periksa suhu dengan termometer kulkas!</p>
+                    `
+                },
+                'manfaat-salad': {
+                    title: 'Manfaat Salad untuk Diet Sehat',
+                    author: 'Dr. Maya',
+                    date: '6 Desember 2024',
+                    readTime: '5 menit baca',
+                    content: `
+                        <p>Salad bukan hanya makanan diet, tetapi pilihan cerdas untuk gaya hidup sehat. Mari pelajari mengapa salad harus menjadi bagian dari menu harian Anda.</p>
+                        
+                        <h3>Kandungan Nutrisi Lengkap</h3>
+                        <p>Salad yang beragam mengandung:</p>
+                        <ul>
+                            <li><strong>Vitamin A, C, K:</strong> Dari sayuran hijau</li>
+                            <li><strong>Folat:</strong> Penting untuk pembentukan sel darah</li>
+                            <li><strong>Serat:</strong> Membantu pencernaan dan kenyang lebih lama</li>
+                            <li><strong>Antioksidan:</strong> Melawan radikal bebas</li>
+                        </ul>
+                        
+                        <h3>Manfaat untuk Kesehatan</h3>
+                        <p><strong>1. Kontrol Berat Badan:</strong> Rendah kalori, tinggi serat membuat kenyang lebih lama</p>
+                        <p><strong>2. Kesehatan Jantung:</strong> Sayuran hijau menurunkan risiko penyakit kardiovaskular</p>
+                        <p><strong>3. Pencernaan Sehat:</strong> Serat membantu pergerakan usus yang teratur</p>
+                        <p><strong>4. Kulit Sehat:</strong> Vitamin C dan antioksidan menjaga elastisitas kulit</p>
+                        
+                        <h3>Tips Membuat Salad Lezat</h3>
+                        <ol>
+                            <li><strong>Variasi Tekstur:</strong> Campurkan sayuran renyah dengan yang lembut</li>
+                            <li><strong>Warna-warni:</strong> Semakin beragam warna, semakin lengkap nutrisinya</li>
+                            <li><strong>Protein Seimbang:</strong> Tambahkan telur, kacang, atau daging tanpa lemak</li>
+                            <li><strong>Dressing Sehat:</strong> Gunakan olive oil, lemon, atau yogurt</li>
+                        </ol>
+                        
+                        <h3>Resep Salad Mediterania</h3>
+                        <p><strong>Bahan:</strong> Selada, tomat cherry, mentimun, zaitun, feta cheese, olive oil, lemon</p>
+                        <p><strong>Cara:</strong> Campurkan semua sayuran, taburi feta, siram dengan campuran olive oil dan lemon</p>
+                        
+                        <p><strong>Ingat:</strong> Salad terbaik adalah yang Anda nikmati. Eksperimen dengan bahan favorit Anda!</p>
+                    `
                 }
-            });
+            };
             
-            showNotification(`${order.items.length} item berhasil ditambahkan ke keranjang`, 'success');
-            showPage('cart');
-        }
-
-        function viewOrderDetails(orderId) {
-            const orders = JSON.parse(localStorage.getItem('orders')) || [];
-            const order = orders.find(o => o.order_id === orderId);
-            
-            if (!order) {
-                showNotification('Pesanan tidak ditemukan', 'error');
+            const article = articles[articleId];
+            if (!article) {
+                showNotification('Artikel tidak ditemukan!', 'error');
                 return;
             }
             
-            const details = `
-📋 DETAIL PESANAN
-
-Order ID: ${order.order_id}
-Tanggal: ${new Date(order.timestamp).toLocaleString('id-ID')}
-Status: ${order.status === 'completed' ? 'Selesai' : 'Pending'}
-
-👤 INFORMASI PELANGGAN:
-Nama: ${order.customer_name}
-Telepon: ${order.customer_phone}
-Alamat: ${order.customer_address}
-
-🍽️ DETAIL PESANAN:
-${order.items.map(item => `• ${item.name} (${item.quantity}x) - ${formatCurrency(item.total)}`).join('\n')}
-
-💰 RINGKASAN:
-Subtotal: ${formatCurrency(order.subtotal)}
-Ongkir: ${formatCurrency(order.shipping)}
-TOTAL: ${formatCurrency(order.total)}
-
-💳 Pembayaran: ${getPaymentMethodText(order.payment_method)}
+            // Create modal overlay
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 2rem;
+                overflow-y: auto;
             `;
             
-            alert(details);
-        }
-
-        function markAsCompleted(orderId) {
-            const orders = JSON.parse(localStorage.getItem('orders')) || [];
-            const orderIndex = orders.findIndex(o => o.order_id === orderId);
+            modal.innerHTML = `
+                <div style="background: white; border-radius: 20px; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative;">
+                    <button onclick="this.closest('.modal').remove()" style="position: absolute; top: 1rem; right: 1rem; background: var(--danger); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; z-index: 1;">×</button>
+                    
+                    <div style="padding: 3rem 2rem 2rem 2rem;">
+                        <div style="text-align: center; margin-bottom: 2rem;">
+                            <h1 style="color: var(--dark); margin-bottom: 1rem; font-size: 2rem;">${article.title}</h1>
+                            <div style="display: flex; justify-content: center; gap: 2rem; color: #666; font-size: 0.9rem; flex-wrap: wrap;">
+                                <span>👨‍🍳 ${article.author}</span>
+                                <span>📅 ${article.date}</span>
+                                <span>⏱️ ${article.readTime}</span>
+                            </div>
+                        </div>
+                        
+                        <div style="line-height: 1.8; color: #333;">
+                            ${article.content}
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 2px solid var(--light);">
+                            <p style="color: #666; margin-bottom: 1rem;">Suka artikel ini? Bagikan ke teman-teman!</p>
+                            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                                <button class="btn" onclick="shareArticle('${articleId}')" style="padding: 0.5rem 1rem; font-size: 0.9rem;">📱 Bagikan</button>
+                                <button class="btn" onclick="this.closest('.modal').remove(); navigateTo('menu')" style="background: var(--success); padding: 0.5rem 1rem; font-size: 0.9rem;">🛒 Pesan Menu</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
             
-            if (orderIndex === -1) {
-                showNotification('Pesanan tidak ditemukan', 'error');
+            modal.className = 'modal';
+            document.body.appendChild(modal);
+            
+            // Close on outside click
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+        
+        function shareArticle(articleId) {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'FoodOrder Blog',
+                    text: 'Baca artikel menarik dari FoodOrder!',
+                    url: window.location.href
+                });
+            } else {
+                // Fallback - copy to clipboard
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    showNotification('Link artikel berhasil disalin!', 'success');
+                });
+            }
+        }
+        
+        function subscribeNewsletter() {
+            const emailInput = document.querySelector('input[type="email"]');
+            const email = emailInput.value.trim();
+            
+            if (!email) {
+                showNotification('Masukkan email Anda terlebih dahulu!', 'error');
                 return;
             }
             
-            orders[orderIndex].status = 'completed';
-            localStorage.setItem('orders', JSON.stringify(orders));
-            updateDashboard();
-            showNotification('Pesanan berhasil ditandai sebagai selesai', 'success');
+            // Simple email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showNotification('Format email tidak valid!', 'error');
+                return;
+            }
+            
+            // Simulate subscription
+            showNotification('Terima kasih! Anda berhasil berlangganan newsletter FoodOrder!', 'success');
+            emailInput.value = '';
+        }
+
+        // Utility functions
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            if (!notification) return;
+            
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
         }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9891d42c951efd89',t:'MTc1OTU1MTAxOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98920c6394a581c2',t:'MTc1OTU1MzMyMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
