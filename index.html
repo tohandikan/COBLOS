@@ -162,6 +162,61 @@ _Pelanggan ingin berlangganan newsletter untuk mendapatkan info produk dan promo
 
             return await sendFonnteMessage(adminPhone, message);
         }
+
+        // Google Apps Script Integration
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxJAdAaEnGdU7eTDFSOePe119JBoxQqiZ28XkS94uA63EN5x_fHF0qNq22KoMNDIpkB/exec';
+
+        // Fungsi untuk menyimpan data ke Google Sheets
+        async function saveToGoogleSheets(data, type) {
+            try {
+                const payload = {
+                    type: type,
+                    data: data,
+                    timestamp: new Date().toISOString()
+                };
+
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                // Karena no-cors, kita tidak bisa membaca response
+                // Tapi request tetap akan dikirim
+                return { success: true };
+            } catch (error) {
+                console.error('Google Sheets Error:', error);
+                return { success: false, error: error.message };
+            }
+        }
+
+        // Fungsi untuk mengirim email
+        async function sendEmailNotification(data, type) {
+            try {
+                const emailPayload = {
+                    type: type,
+                    data: data,
+                    timestamp: new Date().toISOString()
+                };
+
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(emailPayload)
+                });
+
+                return { success: true };
+            } catch (error) {
+                console.error('Email Error:', error);
+                return { success: false, error: error.message };
+            }
+        }
     </script>
 
     <style>
@@ -2383,7 +2438,7 @@ _Pelanggan ingin berlangganan newsletter untuk mendapatkan info produk dan promo
             document.getElementById('checkout-modal').classList.remove('show');
         }
 
-        // Order processing dengan integrasi Fonnte
+        // Order processing dengan integrasi lengkap
         async function processOrder(event) {
             event.preventDefault();
             
@@ -2410,7 +2465,13 @@ _Pelanggan ingin berlangganan newsletter untuk mendapatkan info produk dan promo
                 const orderId = 'DF' + Date.now();
                 orderData.orderId = orderId;
 
-                // Kirim pesan ke Fonnte
+                // 1. Simpan ke Google Sheets
+                const sheetsResult = await saveToGoogleSheets(orderData, 'order');
+                
+                // 2. Kirim email konfirmasi
+                const emailResult = await sendEmailNotification(orderData, 'order');
+                
+                // 3. Kirim pesan ke Fonnte
                 const fonnteResult = await sendOrderToFonnte(orderData);
                 
                 // Clear cart
@@ -2426,12 +2487,15 @@ _Pelanggan ingin berlangganan newsletter untuk mendapatkan info produk dan promo
                 // Reset form
                 event.target.reset();
                 
-                // Show notification berdasarkan hasil Fonnte
+                // Show notification berdasarkan hasil
+                let successMessage = 'Pesanan berhasil diproses! ';
                 if (fonnteResult.adminSuccess || fonnteResult.customerSuccess) {
-                    showNotification('Pesanan berhasil dikirim! Tim kami akan segera menghubungi Anda.', 'success');
+                    successMessage += 'Tim kami akan segera menghubungi Anda.';
                 } else {
-                    showNotification('Pesanan berhasil diproses! Silakan hubungi kami melalui WhatsApp untuk konfirmasi.', 'info');
+                    successMessage += 'Silakan hubungi kami melalui WhatsApp untuk konfirmasi.';
                 }
+                
+                showNotification(successMessage, 'success');
                 
             } catch (error) {
                 console.error('Error:', error);
@@ -2529,24 +2593,41 @@ Tanggal: ${new Date(orderData.tanggal).toLocaleString('id-ID')}`;
             }
         }
 
-        // Contact form dengan integrasi Fonnte
+        // Contact form dengan integrasi lengkap
         async function sendMessage(event) {
             event.preventDefault();
             
             const formData = new FormData(event.target);
+            const contactData = {
+                nama: formData.get('nama'),
+                email: formData.get('email'),
+                whatsapp: formData.get('whatsapp'),
+                kategori: formData.get('kategori'),
+                subjek: formData.get('subjek'),
+                pesan: formData.get('pesan'),
+                newsletter: formData.get('newsletter') ? 'Ya' : 'Tidak',
+                tanggal: new Date().toISOString()
+            };
             
-            // Kirim ke Fonnte
-            const fonnteResult = await sendContactToFonnte(formData);
-            
-            if (fonnteResult.success) {
-                showNotification('Pesan berhasil dikirim! Tim kami akan segera merespon.', 'success');
-            } else {
-                // Fallback ke WhatsApp biasa
-                const kategori = formData.get('kategori') ? `\nKategori: ${formData.get('kategori')}` : '';
-                const whatsapp = formData.get('whatsapp') ? `\nWhatsApp: ${formData.get('whatsapp')}` : '';
-                const subjek = formData.get('subjek') ? `\nSubjek: ${formData.get('subjek')}` : '';
+            try {
+                // 1. Simpan ke Google Sheets
+                await saveToGoogleSheets(contactData, 'contact');
                 
-                const message = `Halo DarkFlow Gaming!
+                // 2. Kirim email notifikasi
+                await sendEmailNotification(contactData, 'contact');
+                
+                // 3. Kirim ke Fonnte
+                const fonnteResult = await sendContactToFonnte(formData);
+                
+                if (fonnteResult.success) {
+                    showNotification('Pesan berhasil dikirim! Tim kami akan segera merespon.', 'success');
+                } else {
+                    // Fallback ke WhatsApp biasa
+                    const kategori = formData.get('kategori') ? `\nKategori: ${formData.get('kategori')}` : '';
+                    const whatsapp = formData.get('whatsapp') ? `\nWhatsApp: ${formData.get('whatsapp')}` : '';
+                    const subjek = formData.get('subjek') ? `\nSubjek: ${formData.get('subjek')}` : '';
+                    
+                    const message = `Halo DarkFlow Gaming!
 
 Nama: ${formData.get('nama')}
 Email: ${formData.get('email')}${whatsapp}${kategori}${subjek}
@@ -2554,10 +2635,15 @@ Email: ${formData.get('email')}${whatsapp}${kategori}${subjek}
 Pesan:
 ${formData.get('pesan')}`;
 
-                const whatsappUrl = `https://wa.me/6282225544756?text=${encodeURIComponent(message)}`;
-                window.open(whatsappUrl, '_blank');
+                    const whatsappUrl = `https://wa.me/6282225544756?text=${encodeURIComponent(message)}`;
+                    window.open(whatsappUrl, '_blank');
+                    
+                    showNotification('Pesan akan dikirim melalui WhatsApp!', 'success');
+                }
                 
-                showNotification('Pesan akan dikirim melalui WhatsApp!', 'success');
+            } catch (error) {
+                console.error('Error sending message:', error);
+                showNotification('Terjadi kesalahan. Silakan coba lagi.', 'error');
             }
             
             event.target.reset();
@@ -2676,20 +2762,31 @@ ${formData.get('pesan')}`;
             }
         }
 
-        // Newsletter subscription dengan integrasi Fonnte
+        // Newsletter subscription dengan integrasi lengkap
         async function subscribeNewsletter(event) {
             event.preventDefault();
             
             const email = event.target.email.value;
+            const newsletterData = {
+                email: email,
+                tanggal: new Date().toISOString()
+            };
             
-            // Kirim ke Fonnte
-            const fonnteResult = await sendNewsletterToFonnte(email);
-            
-            if (fonnteResult.success) {
-                showNotification('Berhasil berlangganan newsletter!', 'success');
-            } else {
-                // Fallback ke WhatsApp biasa
-                const message = `Halo DarkFlow Gaming!
+            try {
+                // 1. Simpan ke Google Sheets
+                await saveToGoogleSheets(newsletterData, 'newsletter');
+                
+                // 2. Kirim email konfirmasi
+                await sendEmailNotification(newsletterData, 'newsletter');
+                
+                // 3. Kirim ke Fonnte
+                const fonnteResult = await sendNewsletterToFonnte(email);
+                
+                if (fonnteResult.success) {
+                    showNotification('Berhasil berlangganan newsletter!', 'success');
+                } else {
+                    // Fallback ke WhatsApp biasa
+                    const message = `Halo DarkFlow Gaming!
 
 Saya ingin berlangganan newsletter untuk mendapatkan:
 - Info produk gaming terbaru
@@ -2701,10 +2798,15 @@ Email: ${email}
 
 Terima kasih!`;
 
-                const whatsappUrl = `https://wa.me/6282225544756?text=${encodeURIComponent(message)}`;
-                window.open(whatsappUrl, '_blank');
+                    const whatsappUrl = `https://wa.me/6282225544756?text=${encodeURIComponent(message)}`;
+                    window.open(whatsappUrl, '_blank');
+                    
+                    showNotification('Newsletter subscription akan diproses melalui WhatsApp!', 'success');
+                }
                 
-                showNotification('Newsletter subscription akan diproses melalui WhatsApp!', 'success');
+            } catch (error) {
+                console.error('Error subscribing newsletter:', error);
+                showNotification('Terjadi kesalahan. Silakan coba lagi.', 'error');
             }
             
             event.target.reset();
@@ -3148,26 +3250,32 @@ Terima kasih!`;
                                     </ul>
                                 </div>
                                 
-                                <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 border border-cyan-500/20 card-hover">
-                                    <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                                        <i class="fas fa-trophy text-2xl text-white"></i>
-                                    </div>
-                                    <h3 class="text-lg font-bold text-white mb-2">Esports</h3>
-                                    <p class="text-gray-400 text-sm mb-4">Peralatan profesional untuk kompetisi esports tingkat tinggi</p>
-                                    <button onclick="navigateToCategory('headset')" class="text-cyan-400 hover:text-cyan-300 text-sm transition-all hover:translate-x-1 hover:scale-105 group">
-                                        <span class="button-text">Lihat Produk <i class="fas fa-arrow-right ml-1 transition-transform group-hover:translate-x-1"></i></span>
-                                    </button>
+                                <div class="bg-gray-800/50 rounded-xl p-6 border border-gray-600/30">
+                                    <h4 class="text-lg font-bold text-white mb-3">
+                                        <i class="fas fa-volume-up text-green-400 mr-2"></i>
+                                        Audio Setup
+                                    </h4>
+                                    <ul class="text-gray-300 space-y-2 text-sm">
+                                        <li>• Acoustic foam untuk mengurangi echo</li>
+                                        <li>• Gaming headset dengan noise cancellation</li>
+                                        <li>• Studio speakers untuk musik</li>
+                                        <li>• Audio interface untuk streaming</li>
+                                        <li>• Boom arm untuk microphone</li>
+                                    </ul>
                                 </div>
                                 
-                                <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 border border-cyan-500/20 card-hover">
-                                    <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                                        <i class="fas fa-desktop text-2xl text-white"></i>
-                                    </div>
-                                    <h3 class="text-lg font-bold text-white mb-2">Streaming</h3>
-                                    <p class="text-gray-400 text-sm mb-4">Setup streaming profesional untuk content creator</p>
-                                    <button onclick="navigateToCategory('monitor')" class="text-cyan-400 hover:text-cyan-300 text-sm transition-all hover:translate-x-1 hover:scale-105 group">
-                                        <span class="button-text">Lihat Produk <i class="fas fa-arrow-right ml-1 transition-transform group-hover:translate-x-1"></i></span>
-                                    </button>
+                                <div class="bg-gray-800/50 rounded-xl p-6 border border-gray-600/30">
+                                    <h4 class="text-lg font-bold text-white mb-3">
+                                        <i class="fas fa-thermometer-half text-green-400 mr-2"></i>
+                                        Climate Control
+                                    </h4>
+                                    <ul class="text-gray-300 space-y-2 text-sm">
+                                        <li>• AC atau fan untuk sirkulasi udara</li>
+                                        <li>• Suhu optimal 20-22°C</li>
+                                        <li>• Humidity control 40-60%</li>
+                                        <li>• Air purifier untuk udara bersih</li>
+                                        <li>• Ventilasi yang baik</li>
+                                    </ul>
                                 </div>
                             </div>
                             
